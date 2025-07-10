@@ -6,9 +6,11 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
+  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { hotels } from "@/data/hotels";
+import Image from "next/image";
 import Link from "next/link";
 
 export function TopHotels() {
@@ -19,8 +21,18 @@ export function TopHotels() {
         subtitle="Onde cada detalhe transforma sua experiência."
       />
       <div className="py-8 flex gap-4">
-        {hotels.map(({ title, description, link }, index) => (
+        {hotels.map(({ title, description, link, image_url }, index) => (
           <Card key={index}>
+            <CardHeader>
+              <div className="relative w-full h-52 ">
+                <Image
+                  alt="city"
+                  src={image_url}
+                  fill
+                  className="absolute object-cover rounded-t-xl"
+                />
+              </div>
+            </CardHeader>
             <CardContent>
               <CardTitle>{title}</CardTitle>
               <CardDescription>{description}</CardDescription>
