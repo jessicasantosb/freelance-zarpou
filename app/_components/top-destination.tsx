@@ -1,6 +1,6 @@
 import { Container } from "@/components/shared/container";
+import { CustomLink } from "@/components/shared/custom-link";
 import { Title } from "@/components/shared/title";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { destinations } from "@/data/destinations";
 import Image from "next/image";
-import Link from "next/link";
 
 export function TopDestination() {
   return (
@@ -38,9 +37,7 @@ export function TopDestination() {
               <CardDescription>{description}</CardDescription>
             </CardContent>
             <CardFooter>
-              <Button>
-                <Link href={link}>Ver mais</Link>
-              </Button>
+              <CustomLink link={link} text="Ver mais" />
             </CardFooter>
           </Card>
         ))}

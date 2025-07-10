@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/container";
+import { CustomLink } from "@/components/shared/custom-link";
 import { Title } from "@/components/shared/title";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,9 +39,7 @@ export function TopHotels() {
               <CardDescription>{description}</CardDescription>
             </CardContent>
             <CardFooter>
-              <Button>
-                <Link href={link}>Faça sua reserva</Link>
-              </Button>
+              <CustomLink link={link} text="Faça sua reserva" />
             </CardFooter>
           </Card>
         ))}
