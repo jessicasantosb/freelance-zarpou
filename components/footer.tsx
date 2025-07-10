@@ -1,34 +1,39 @@
 import Link from "next/link";
+import { FooterTop } from "./footer-top";
 
 export function Footer() {
 
   return (
-    <footer className="w-full bg-primary text-white text-sm">
-      <div className="container p-2 mx-auto flex flex-col sm:flex-row justify-between gap-4 items-center">
-        <div className="flex flex-col items-center md:flex-row">
-          <p>
-            Zarpou Viagens. {' '}
+    <footer>
+      <FooterTop />
 
-            <span>
-              Todos os direitos reservados.
-            </span>
-          </p>
+      <div className="w-full bg-primary text-white text-sm">
+        <div className="container p-2 mx-auto flex flex-col sm:flex-row justify-between gap-4 items-center">
+          <div className="flex flex-col items-center md:flex-row">
+            <p>
+              Zarpou Viagens. {' '}
+
+              <span>
+                Todos os direitos reservados.
+              </span>
+            </p>
+            <p>
+              CNPJ: 000000000 | Brasil
+            </p>
+          </div>
+
           <p>
-            CNPJ: 000000000 | Brasil
+            DESENVOLVIDO POR &copy;
+            {" "}
+            <Link
+              href={`${process.env.NEXT_PUBLIC_PORTFOLIO_LINK}`}
+              target="_blank"
+              className="hover:opacity-90 "
+            >
+              Jessica
+            </Link>
           </p>
         </div>
-
-        <p>
-          DESENVOLVIDO POR &copy;
-          {" "}
-          <Link
-            href={`${process.env.NEXT_PUBLIC_PORTFOLIO_LINK}`}
-            target="_blank"
-            className="hover:opacity-90 "
-          >
-            Jessica
-          </Link>
-        </p>
       </div>
     </footer>
   );
