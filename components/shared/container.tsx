@@ -5,5 +5,5 @@ export function Container({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <section className="container mx-auto px-2 md:px-4">{children}</section>
+  return <section className="container mx-auto pt-8 px-2 md:px-4">{children}</section>
 }
