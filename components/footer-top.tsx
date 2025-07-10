@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Logo } from "./logo";
+import { Logo } from "./shared/logo";
 import Image from "next/image";
 
 const Icon = ({ icon }: { icon: string }) => {
@@ -17,7 +17,7 @@ export function FooterTop() {
 
       <div className="text-center md:text-left">
         <h4 className="font-bold text-muted-foreground">Formas de Pagamento</h4>
-        <div className="flex items-baseline justify-between md:gap-24">
+        <div className="flex flex-col items-center md:flex-row md:items-baseline justify-between md:gap-24">
           <div className="flex flex-col items-center">
             <p className="text-muted-foreground">Cartões de Crédito</p>
             <div className="flex gap-4">
