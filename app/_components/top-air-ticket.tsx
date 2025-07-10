@@ -1,6 +1,6 @@
 import { Container } from "@/components/shared/container";
+import { CustomLink } from "@/components/shared/custom-link";
 import { Title } from "@/components/shared/title";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { airTickets } from "@/data/air-tickets";
 import { Dot } from "lucide-react";
-import Link from "next/link";
+import Image from "next/image";
 
 export function TopAirTicket() {
   return (
@@ -19,10 +19,18 @@ export function TopAirTicket() {
         title="Passagens para o Exterior"
         subtitle="Explore novos países com praticidade e ótimos preços."
       />
-      <div className="py-8 flex gap-4">
+      <div className="py-8 flex flex-col gap-6">
         {airTickets.map(
-          ({ title, description, link, departure_from }, index) => (
-            <Card key={index}>
+          ({ title, description, link, departure_from, image_url }, index) => (
+            <Card key={index} className="flex-row">
+              <div className="relative w-96 h-52 ">
+                <Image
+                  alt="city"
+                  src={image_url}
+                  fill
+                  className="absolute object-cover rounded-l-xl"
+                />
+              </div>
               <CardContent>
                 <CardTitle>{title}</CardTitle>
                 <p className="text-muted-foreground flex pb-2">
@@ -31,9 +39,7 @@ export function TopAirTicket() {
                 <CardDescription>{description}</CardDescription>
               </CardContent>
               <CardFooter>
-                <Button>
-                  <Link href={link}>Ver passagens</Link>
-                </Button>
+                <CustomLink link={link} text="Ver passagens" />
               </CardFooter>
             </Card>
           )
