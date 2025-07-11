@@ -15,7 +15,7 @@ import Image from "next/image";
 export function TopAirTicket() {
   return (
     <>
-      <div className="block relative h-44 md:h-60 lg:h-96 w-full -mb-20 sm:-mb-14 lg:-mb-24 -ml-[10rem] md:-ml-[25rem] lg:-ml-[30rem]">
+      <div className="block relative h-44 md:h-60 lg:h-72 2xl:h-96 w-[70dvw] -mb-20 -ml-20 md:-ml-42">
         <Image
           alt="aircraft"
           src={"/airplane.png"}
@@ -35,8 +35,11 @@ export function TopAirTicket() {
               { title, description, link, departure_from, image_url },
               index
             ) => (
-              <Card key={index} className="flex-row">
-                <div className="relative h-52 w-32 md:size-52">
+              <Card
+                key={index}
+                className="h-56 lg:h-44 flex-row md:gap-0 shadow-primary hover:border-primary"
+              >
+                <div className="relative h-full w-32 md:w-96">
                   <Image
                     alt="city"
                     src={image_url}
@@ -44,18 +47,23 @@ export function TopAirTicket() {
                     className="absolute object-cover rounded-l-xl"
                   />
                 </div>
-                <div className="flex-1 flex flex-col md:flex-row justify-between">
-                  <CardContent className="flex-1 pt-4">
+
+                <CardContent className="flex-1 flex flex-col justify-center">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                     <CardTitle>{title}</CardTitle>
-                    <p className="text-muted-foreground flex pb-2">
+                    <p className="text-muted-foreground flex">
                       <Dot /> {departure_from}
                     </p>
-                    <CardDescription>{description}</CardDescription>
-                  </CardContent>
-                  <CardFooter>
+                  </div>
+
+                  <CardDescription>
+                    <p className="pt-4 lg:p-0">{description}</p>
+                  </CardDescription>
+
+                  <CardFooter className="p-0 pt-6">
                     <CustomLink link={link} text="Ver passagens" />
                   </CardFooter>
-                </div>
+                </CardContent>
               </Card>
             )
           )}
