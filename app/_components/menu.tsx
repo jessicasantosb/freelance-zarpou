@@ -1,38 +1,51 @@
 import { Container } from "@/components/shared/container";
+import { Title } from "@/components/shared/title";
 import { Building, Car, Luggage, Plane, Ticket } from "lucide-react";
+import Image from "next/image";
 
 export function Menu() {
   return (
     <Container>
-      <div className="py-8 flex flex-col md:flex-row text-center md:text-left items-center justify-between gap-8 min-h-[60dvh]">
-        <div>
-          <h2 className="text-4xl">Tudo o que você precisa, em um só lugar</h2>
-          <p className="text-lg pt-4">
-            Organize toda a sua viagem com praticidade e confiança
+      <Title
+        title="Tudo o que você precisa, em um só lugar"
+        subtitle="Organize toda a sua viagem com praticidade e confiança"
+      />
+      <div className="pb-8 flex flex-col md:flex-row text-center md:text-left items-center justify-between gap-8 min-h-[60dvh]">
+        <div className="pt-12 text-xl md:text-2xl text-left text-[#393838] flex flex-col leading-14 [&>*]:flex [&>*]:items-center [&>*]:gap-2 [&_svg]:text-secondary [&_svg]:size-10">
+          <p>
+            <Plane /> Passagem de avião
+          </p>
+          <p>
+            <Building /> Hospedagem
+          </p>
+          <p>
+            <Luggage /> Pacote de viagem completo
+          </p>
+          <p>
+            <Ticket /> Ingresso para shows
+          </p>
+          <p>
+            <Car /> Aluguel de carros
           </p>
         </div>
 
-        <div className="bg-primary text-white p-4 md:px-24 md:py-8 rounded-lg shadow-xl flex flex-col leading-12 [&>*]:flex [&>*]:items-center [&>*]:gap-2">
-          <p>
-            <Plane />
-            Passagens de avião
-          </p>
-          <p>
-            <Building />
-            Hospedagem
-          </p>
-          <p>
-            <Luggage />
-            Pacotes de viagens completo
-          </p>
-          <p>
-            <Ticket />
-            Ingresso para shows
-          </p>
-          <p>
-            <Car />
-            Aluguel de carros
-          </p>
+        <div className="hidden lg:flex flex-col">
+          <div className="relative size-[30rem] flex flex-col">
+            <Image
+              alt="aircraft"
+              src={"/Trip-pana.svg"}
+              fill
+              className="absolute object-cover"
+            />
+          </div>
+
+          <a
+            href="https://storyset.com/travel"
+            target="_blank"
+            className="text-center text-sm text-muted-foreground italic"
+          >
+            ilustração por Storyset
+          </a>
         </div>
       </div>
     </Container>
