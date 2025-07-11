@@ -15,6 +15,15 @@ import Image from "next/image";
 export function TopAirTicket() {
   return (
     <Container>
+      <div className="hidden md:block relative h-60 lg:h-72 w-full -ml-[25rem] lg:-ml-[30rem]">
+        <Image
+          alt="aircraft"
+          src={"/airplane.png"}
+          fill
+          className="absolute object-cover"
+        />
+      </div>
+
       <Title
         title="Passagens para o Exterior"
         subtitle="Explore novos países com praticidade e ótimos preços."
