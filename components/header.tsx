@@ -11,7 +11,7 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="absolute w-full p-4 flex items-center bg-transparent justify-between gap-4">
+    <header className="absolute w-full py-4 px-8 flex items-center bg-transparent justify-between gap-4 text-white z-50">
       <Logo />
       <div className="flex items-center gap-6">
         <div className="hidden md:flex items-center gap-6">

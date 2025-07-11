@@ -20,11 +20,11 @@ export function HeaderMenu() {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-transparent text-black">
+        <Button className="bg-transparent text-white">
           <Menu />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-full bg-amber-400">
+      <DropdownMenuContent className="w-full">
         <DropdownMenuItem onClick={handleCloseMenu}>
           <MessageSquareMore />
           <Link href={"/contact"}>Contato</Link>

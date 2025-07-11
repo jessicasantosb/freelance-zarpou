@@ -36,7 +36,7 @@ export function TopAirTicket() {
               index
             ) => (
               <Card key={index} className="flex-row">
-                <div className="relative w-96 h-52">
+                <div className="relative h-52 w-32 md:size-52">
                   <Image
                     alt="city"
                     src={image_url}
@@ -44,16 +44,18 @@ export function TopAirTicket() {
                     className="absolute object-cover rounded-l-xl"
                   />
                 </div>
-                <CardContent>
-                  <CardTitle>{title}</CardTitle>
-                  <p className="text-muted-foreground flex pb-2">
-                    <Dot /> {departure_from}
-                  </p>
-                  <CardDescription>{description}</CardDescription>
-                </CardContent>
-                <CardFooter>
-                  <CustomLink link={link} text="Ver passagens" />
-                </CardFooter>
+                <div className="flex-1 flex flex-col md:flex-row justify-between">
+                  <CardContent className="flex-1 pt-4">
+                    <CardTitle>{title}</CardTitle>
+                    <p className="text-muted-foreground flex pb-2">
+                      <Dot /> {departure_from}
+                    </p>
+                    <CardDescription>{description}</CardDescription>
+                  </CardContent>
+                  <CardFooter>
+                    <CustomLink link={link} text="Ver passagens" />
+                  </CardFooter>
+                </div>
               </Card>
             )
           )}
