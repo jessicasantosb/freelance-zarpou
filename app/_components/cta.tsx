@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { PhoneCall } from "lucide-react";
+import { ContactButton } from "@/components/shared/contact-button";
 
 export function Cta() {
   return (
@@ -21,13 +20,7 @@ export function Cta() {
         <p className="py-4 text-md md:text-lg">
           O futuro é promissor para quem se antecipa
         </p>
-        <Button
-          className="shadow-2xl shadow-secondary cursor-pointer"
-          size={"lg"}
-        >
-          Vamos conversar
-          <PhoneCall className="size-6" />
-        </Button>
+        <ContactButton>Vamos conversar</ContactButton>
       </div>
     </section>
   );
