@@ -1,3 +1,4 @@
+import { CardsContainer } from "@/components/shared/cards-container";
 import { Container } from "@/components/shared/container";
 import { CustomLink } from "@/components/shared/custom-link";
 import { Title } from "@/components/shared/title";
@@ -19,9 +20,9 @@ export function TopDestination() {
         title="Lugares Imperdíveis"
         subtitle="Altamente procurados, e prontos para te surpreender."
       />
-      <div className="py-8 grid grid-cols-3 gap-4">
+      <CardsContainer>
         {destinations.map(({ title, description, link, image_url }, index) => (
-          <Card key={index}>
+          <Card key={index} className="min-w-[15rem]">
             <CardHeader>
               <div className="relative w-full h-52 ">
                 <Image
@@ -41,7 +42,7 @@ export function TopDestination() {
             </CardFooter>
           </Card>
         ))}
-      </div>
+      </CardsContainer>
     </Container>
   );
 }

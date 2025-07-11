@@ -32,7 +32,7 @@ export function TopAirTicket() {
         {airTickets.map(
           ({ title, description, link, departure_from, image_url }, index) => (
             <Card key={index} className="flex-row">
-              <div className="relative w-96 h-52 ">
+              <div className="relative w-96 h-52">
                 <Image
                   alt="city"
                   src={image_url}
