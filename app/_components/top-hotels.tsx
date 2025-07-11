@@ -1,7 +1,6 @@
 import { Container } from "@/components/shared/container";
 import { CustomLink } from "@/components/shared/custom-link";
 import { Title } from "@/components/shared/title";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { hotels } from "@/data/hotels";
 import Image from "next/image";
-import Link from "next/link";
 
 export function TopHotels() {
   return (
