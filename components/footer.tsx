@@ -11,7 +11,7 @@ export function Footer() {
         <div className="container p-2 mx-auto flex flex-col sm:flex-row justify-between gap-4 items-center">
           <div className="flex flex-col items-center md:flex-row md:gap-4">
             <p>
-              Zarpou Viagens. {' '}
+              Zarpou Viagens e Turismo. {' '}
 
               <span>
                 Todos os direitos reservados.

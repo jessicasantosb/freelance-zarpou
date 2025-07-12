@@ -23,7 +23,7 @@ export function HeaderMenu() {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
-          className={`bg-transparent text-white ${scrolled && "text-black"}`}
+          className={`bg-transparent text-white ${scrolled && "text-primary"}`}
         >
           <Menu className="size-8" />
         </Button>

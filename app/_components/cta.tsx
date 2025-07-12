@@ -13,7 +13,7 @@ export function Cta() {
         className="hidden md:block w-full h-[60dvh] object-cover"
       />
 
-      <div className="flex-1 p-2 flex flex-col items-center justify-center bg-[#1e5f98] text-white text-center">
+      <div className="flex-1 p-4 flex flex-col items-center justify-center bg-[#1e5f98] text-white text-center">
         <h1 className="text-2xl md:text-4xl font-bold">
           Garanta um futuro cheio de possibilidades
         </h1>

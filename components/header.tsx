@@ -16,7 +16,7 @@ export function Header() {
       className={`fixed top-0 w-full z-50 px-8 py-4 flex items-center justify-between gap-4 transition-all duration-300 ease-in-out
         ${
           scrolled
-            ? "bg-white text-primary shadow-md shadow-primary/40 opacity-95"
+            ? "bg-[#f2dfb5] text-primary shadow-md opacity-90"
             : "bg-transparent text-white"
         }
       `}

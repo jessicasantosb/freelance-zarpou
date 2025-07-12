@@ -25,7 +25,7 @@ export function Hero() {
           no seu destino
         </h1>
         <p className="text-xl md:text-2xl mt-6 max-w-2xl">
-          Porque momentos especiais merecem viagens únicas
+          momentos especiais merecem viagens únicas
         </p>
         <div className="pt-8 flex flex-col md:flex-row gap-4 [&>*]:h-12 [&>*]:w-44">
           <Button variant={"outline"}>
@@ -36,7 +36,7 @@ export function Hero() {
               Converse Conosco
             </Link>
           </Button>
-          <CustomLink link="/" text="Nossas ofertas" />
+          <CustomLink link="https://app.onertravel.com/zarpouviagens/home" text="Nossas ofertas" />
         </div>
       </div>
     </div>
