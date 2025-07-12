@@ -22,7 +22,7 @@ export function TopHotels() {
       />
         <CardsContainer>
           {hotels.map(({ title, description, link, image_url }, index) => (
-            <Card key={index} className="min-w-[15rem]">
+            <Card key={index} className="w-full min-w-[15rem]">
               <CardHeader>
                 <div className="relative w-full h-52">
                   <Image

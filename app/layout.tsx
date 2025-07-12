@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br">
+    <html lang="pt-br" data-scroll="0" className="group">
       <body className={`${poppins.variable} antialiased`}>
         <Header />
         {children}

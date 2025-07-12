@@ -5,10 +5,15 @@ import Image from "next/image";
 const Icon = ({ icon }: { icon: string }) => {
   return (
     <div className="relative size-8">
-      <Image alt={icon} src={`/icons/${icon}.svg`} fill className="absolute object-fit" />
+      <Image
+        alt={icon}
+        src={`/icons/${icon}.svg`}
+        fill
+        className="absolute object-fit"
+      />
     </div>
-  )
-}
+  );
+};
 
 export function FooterTop() {
   return (
@@ -21,15 +26,15 @@ export function FooterTop() {
           <div className="flex flex-col items-center">
             <p className="text-muted-foreground">Cartões de Crédito</p>
             <div className="flex gap-4">
-              <Icon icon='visa' />
-              <Icon icon='mastercard' />
-              <Icon icon='elo' />
+              <Icon icon="visa" />
+              <Icon icon="mastercard" />
+              <Icon icon="elo" />
             </div>
           </div>
 
           <div className="pt-4 flex flex-col items-center">
             <p className="text-muted-foreground">Transferências ou Débito</p>
-            <Icon icon='pix' />
+            <Icon icon="pix" />
           </div>
         </div>
       </div>
@@ -43,14 +48,14 @@ export function FooterTop() {
             target="_blank"
             className="hover:opacity-90"
           >
-            <Icon icon='whatsapp' />
+            <Icon icon="whatsapp" />
           </Link>
           <Link
             href={`https://www.instagram.com/${process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME}`}
             target="_blank"
             className="hover:opacity-90"
           >
-            <Icon icon='instagram' />
+            <Icon icon="instagram" />
           </Link>
         </div>
       </div>
