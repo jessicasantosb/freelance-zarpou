@@ -10,24 +10,28 @@ import { useScrollState } from "@/hooks/useScrollState";
 export function Header() {
   const pathname = usePathname();
   const scrolled = useScrollState();
+  
+  const aboutPage = pathname === "/about";
+  const contactPage = pathname === "/contact";
 
   return (
     <header
       className={`fixed top-0 w-full z-50 px-8 py-4 flex items-center justify-between gap-4 transition-all duration-300 ease-in-out
         ${
-          scrolled
+          scrolled || aboutPage
             ? "bg-[#f2dfb5] text-primary shadow-md opacity-90"
             : "bg-transparent text-white"
         }
       `}
     >
-      {scrolled ? <InlineLogo /> : <InlineLogoLight />}
+      {scrolled || aboutPage ? <InlineLogo /> : <InlineLogoLight />}
+
       <div className="flex items-center gap-6">
         <div className="hidden md:flex items-center gap-6">
           <Link
             href="/contact"
             className={`flex items-center gap-1 underline-offset-2 hover:underline hover:opacity-90 ${
-              pathname === "/contact" ? "underline" : ""
+              contactPage && "underline"
             }`}
           >
             <MessageSquareMore />
@@ -36,7 +40,7 @@ export function Header() {
           <Link
             href="/about"
             className={`flex items-center gap-1 underline-offset-2 hover:underline hover:opacity-90 ${
-              pathname === "/about" ? "underline" : ""
+              aboutPage && "underline"
             }`}
           >
             <SquareUser />
