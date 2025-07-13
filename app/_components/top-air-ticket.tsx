@@ -1,5 +1,6 @@
 import { Container } from "@/components/shared/container";
 import { CustomLink } from "@/components/shared/custom-link";
+import { CustomImage } from "@/components/shared/image";
 import { Title } from "@/components/shared/title";
 import {
   Card,
@@ -40,12 +41,7 @@ export function TopAirTicket() {
                 className="h-72 lg:h-44 flex-row md:gap-0 shadow-primary hover:border-primary"
               >
                 <div className="relative h-full w-32 md:w-96">
-                  <Image
-                    alt="city"
-                    src={image_url}
-                    fill
-                    className="absolute object-cover rounded-l-xl"
-                  />
+                  <CustomImage alt={title} src={image_url} rounded="rounded-l-xl" />
                 </div>
 
                 <CardContent className="flex-1 flex flex-col justify-center">
