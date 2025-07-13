@@ -10,7 +10,7 @@ export function ZarpouServices() {
       {zarpouServices.map(({ title, description }) => (
         <div key={title} className="pb-4">
           <h3 className="text-lg font-bold tracking-wider text-primary">{title}</h3>
-          <p>{description}</p>
+          <p className="leading-7">{description}</p>
         </div>
       ))}
     </div>

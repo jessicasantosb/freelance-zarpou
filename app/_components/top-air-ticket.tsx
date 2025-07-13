@@ -15,7 +15,7 @@ import Image from "next/image";
 export function TopAirTicket() {
   return (
     <>
-      <div className="block relative h-44 md:h-60 lg:h-72 2xl:h-96 w-[70dvw] -mb-20 -ml-20 md:-ml-42">
+      <div className="block relative w-dvw lg:w-[80dvw] h-72 2xl:h-96 -mb-32 -mt-8 -ml-28 sm:-mb-24 sm:-mt-0 md:-mb-16 md:-ml-72">
         <Image
           alt="aircraft"
           src={"/airplane.png"}
@@ -37,7 +37,7 @@ export function TopAirTicket() {
             ) => (
               <Card
                 key={index}
-                className="h-56 lg:h-44 flex-row md:gap-0 shadow-primary hover:border-primary"
+                className="h-72 lg:h-44 flex-row md:gap-0 shadow-primary hover:border-primary"
               >
                 <div className="relative h-full w-32 md:w-96">
                   <Image
@@ -49,7 +49,7 @@ export function TopAirTicket() {
                 </div>
 
                 <CardContent className="flex-1 flex flex-col justify-center">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                  <div className="flex flex-col lg:flex-row lg:items-center justify-between">
                     <CardTitle>{title}</CardTitle>
                     <p className="text-muted-foreground flex">
                       <Dot /> {departure_from}

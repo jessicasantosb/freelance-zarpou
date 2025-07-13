@@ -33,7 +33,7 @@ export function Hero() {
               href={"/contact"}
               className="px-4 py-2 h-full rounded-md flex items-center gap-2"
             >
-              Converse Conosco
+              Converse conosco
             </Link>
           </Button>
           <CustomLink link="https://app.onertravel.com/zarpouviagens/home" text="Nossas ofertas" />

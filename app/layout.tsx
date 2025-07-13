@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     default: "Zarpou",
     template: "Zarpou | %s",
   },
-  description: "",
+  description: "Descubra a Zarpou Viagens: agência online com pacotes personalizados, preços justos e uma plataforma segura para planejar sua próxima viagem.",
   icons: {
     icon: "/logo/logo-image-light.svg",
   },

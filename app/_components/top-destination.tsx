@@ -16,7 +16,7 @@ export function TopDestination() {
       <CardsContainer>
         {destinations.map(({ title, link, image_url }, index) => (
           <Card key={index} className="w-full min-w-[15rem]">
-            <CardContent className="p-0">
+            <CardContent className="px-0 md:px-0">
               <div className="relative w-full h-72">
                 <Image
                   alt="city"
@@ -25,7 +25,7 @@ export function TopDestination() {
                   className="absolute object-cover rounded-xl"
                 />
                 <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10 rounded-xl" />
-                <div className="absolute w-full bottom-6 left-6 text-white z-20">
+                <div className="absolute bottom-6 left-6 text-white z-20">
                   <CardTitle className="text-3xl tracking-tight">{title}</CardTitle>
                   <CustomLink link={link} text="Ver mais" />
                 </div>

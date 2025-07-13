@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+
 import { ContactDialog } from "./contact-dialog/dialog";
 import { Button } from "../ui/button";
-import { PhoneCall } from "lucide-react";
 
 export function ContactButton({
   children,
@@ -15,12 +16,17 @@ export function ContactButton({
   return (
     <>
       <Button
-        className="shadow-2xl shadow-secondary font-bold tracking-wider cursor-pointer text-lg"
+        className="shadow-md shadow-secondary tracking-wider cursor-pointer text-lg"
         size={"lg"}
         onClick={() => setCheckoutOpen(true)}
       >
         {children}
-        <PhoneCall className="size-6" />
+        <Image
+          alt="whatsapp"
+          src={"/icons/whatsapp-black.svg"}
+          width={20}
+          height={20}
+        />
       </Button>
       <ContactDialog open={checkoutOpen} onOpenChange={setCheckoutOpen} />
     </>

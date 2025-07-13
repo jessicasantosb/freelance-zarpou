@@ -42,7 +42,7 @@ export function FooterTop() {
       <div className="flex flex-col items-center gap-1">
         <h4 className="font-bold text-muted-foreground">Redes Socias</h4>
         <p className="text-muted-foreground">siga a Zarpou</p>
-        <div className="flex gap-4 md:gap-6">
+        <div className="flex gap-4">
           <Link
             href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
             target="_blank"

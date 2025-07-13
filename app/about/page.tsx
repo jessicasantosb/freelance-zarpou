@@ -4,7 +4,7 @@ import { ZarpouServices } from "./_components/zarpou-services";
 
 export const metadata = {
   title: "Sobre nós",
-  description: "",
+  description: "A Zarpou Viagens é uma agência de viagens de Belo Horizonte focada em roteiros personalizados, suporte confiável e experiências únicas para cada cliente.",
 };
 
 export default function About() {
@@ -15,7 +15,7 @@ export default function About() {
           Sobre a Zarpou Viagens e Turismo
         </h1>
 
-        <p className="pt-4 text-justify">{aboutZarpou}</p>
+        <p className="pt-4 text-justify leading-7">{aboutZarpou}</p>
 
         <ZarpouServices />
       </Container>

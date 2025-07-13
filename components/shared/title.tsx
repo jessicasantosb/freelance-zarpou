@@ -12,7 +12,7 @@ export function Title({ title, subtitle }: TitleProps) {
       <h1 className="text-2xl md:text-4xl font-bold">
         <span className="relative inline-block">
           {firstWord}
-          <span className="h-2 w-24 absolute -bottom-1 -left-4 -z-10 rounded bg-primary/50" />
+          <span className="h-2 w-24 absolute -bottom-1 -left-4 -z-10 rounded bg-primary" />
         </span>{" "}
         {rest.join(" ")}
       </h1>
