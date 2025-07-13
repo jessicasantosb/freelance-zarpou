@@ -15,7 +15,7 @@ export function Hero() {
         className="absolute top-0 left-0 w-full h-full object-cover"
       />
 
-      <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10" />
+      <div className="absolute top-0 left-0 w-full h-full bg-primary/50 z-10" />
 
       <div className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-4">
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight">

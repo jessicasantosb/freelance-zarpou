@@ -42,7 +42,7 @@ export function Menu() {
           <a
             href="https://storyset.com/travel"
             target="_blank"
-            className="text-center text-sm text-muted-foreground italic"
+            className="-mt-6 text-center text-sm text-muted-foreground italic"
           >
             ilustração por Storyset
           </a>

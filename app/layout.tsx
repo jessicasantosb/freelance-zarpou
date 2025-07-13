@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+  import { ToastContainer } from 'react-toastify';
+
 import "./globals.css";
+
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 
@@ -16,7 +19,7 @@ export const metadata: Metadata = {
   },
   description: "",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/logo/logo-image-light.svg",
   },
 };
 
@@ -28,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" data-scroll="0" className="group">
       <body className={`${poppins.variable} antialiased`}>
+        <ToastContainer position="bottom-center" />
         <Header />
         {children}
         <Footer />

@@ -1,14 +1,16 @@
+import { Hero } from "./_components/hero";
+import { Questions } from "./_components/questions";
+
 export const metadata = {
   title: "Contato",
-  description:
-    "",
+  description: "",
 };
 
 export default function Contact() {
-
   return (
     <main>
-      <h3>Contato</h3>
+      <Hero />
+      <Questions />
     </main>
   );
 }
