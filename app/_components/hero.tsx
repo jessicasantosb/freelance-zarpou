@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function Hero() {
   return (
-    <div className="relative w-full h-[100dvh] overflow-hidden">
+    <div className="relative w-full h-[100svh] overflow-hidden">
       {/* Vídeo de Naveen G: https://www.pexels.com/pt-br/video/imagens-das-ondas-do-oceano-em-camera-lenta-3834452/ */}
       <video
         src="/waves.mp4"
