@@ -2,7 +2,7 @@ import { ContactButton } from "@/components/shared/contact-button";
 
 export function Cta() {
   return (
-    <section className="h-[40dvh] md:h-[60dvh] grid grid-cols-1 md:grid-cols-2 mt-12 mb-16 shadow-xl">
+    <section className="h-[40svh] md:h-[60svh] grid grid-cols-1 md:grid-cols-2 mt-12 mb-16 shadow-xl">
       {/* Vídeo de Micaela Alejandro: https://www.pexels.com/pt-br/video/praia-litoral-espuma-oceano-10758010/ */}
       <video
         src="/cta.mp4"
