@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function Hero() {
   return (
-    <div className="relative w-full h-[70dvh]">
+    <div className="relative w-full h-[70svh]">
       <div className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-4">
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
           Fale com a 

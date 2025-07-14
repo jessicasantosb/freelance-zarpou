@@ -4,7 +4,7 @@ import React from "react";
 
 export default function NotFound() {
   return (
-    <main className="h-[100dvh] px-2 pt-32 pb-0 md:pb-14 flex flex-col items-center justify-center text-center">
+    <main className="h-[100svh] px-2 pt-32 pb-0 md:pb-14 flex flex-col items-center justify-center text-center">
       <div className="flex text-[8rem] md:text-[15rem] text-primary font-bold">
         <span>4</span>
         <span className="relative size-[7rem] md:size-[14rem] my-auto">

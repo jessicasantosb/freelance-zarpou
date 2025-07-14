@@ -30,7 +30,7 @@ export function HeaderMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className={`
-        min-w-[50dvw] h-[20dvh] mt-5 py-8 flex flex-col items-center justify-center gap-4 bg-white shadow-md shadow-primary text-md
+        min-w-[50dvw] h-[20svh] mt-5 py-8 flex flex-col items-center justify-center gap-4 bg-white shadow-md shadow-primary text-md
         ${!scrolled && "bg-white/50"}
         `}
       >

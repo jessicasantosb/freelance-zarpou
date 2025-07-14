@@ -15,7 +15,7 @@ export function Menu() {
         title="Tudo o que você precisa, em um só lugar"
         subtitle="Organize toda a sua viagem com praticidade e confiança"
       />
-      <div className="pb-8 flex flex-col md:flex-row text-center md:text-left items-center justify-between gap-8 lg:min-h-[60dvh]">
+      <div className="pb-8 flex flex-col md:flex-row text-center md:text-left items-center justify-between gap-8 lg:min-h-[60svh]">
         <ul className="pt-12 text-xl md:text-2xl text-left text-[#393838] flex flex-col leading-14">
           <MenuIcon src="/icons/plane.svg" text="Passagem de avião" />
           <MenuIcon src="/icons/building.svg" text="Hospedagem" />

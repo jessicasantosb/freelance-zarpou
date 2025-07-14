@@ -10,7 +10,7 @@ export function Cta() {
         loop
         muted
         playsInline
-        className="hidden md:block w-full h-[60dvh] object-cover"
+        className="hidden md:block w-full h-[60svh] object-cover"
       />
 
       <div className="flex-1 p-4 flex flex-col items-center justify-center bg-[#1e5f98] text-white text-center">
