@@ -2,7 +2,7 @@
 
 import { MessageSquareMore, SquareUser } from "lucide-react";
 import Link from "next/link";
-import { HeaderMenu } from "./header-menu";
+import { DropdownMenu } from "./dropdown-menu";
 import { InlineLogo, InlineLogoLight } from "./shared/logo";
 import { usePathname } from "next/navigation";
 import { useScrollState } from "@/hooks/useScrollState";
@@ -50,7 +50,7 @@ export function Header() {
         </div>
 
         <div className="md:hidden">
-          <HeaderMenu />
+          <DropdownMenu scrolled={scrolled} />
         </div>
       </div>
     </header>
