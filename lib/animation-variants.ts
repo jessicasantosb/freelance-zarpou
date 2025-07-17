@@ -1,22 +1,26 @@
-'use client'
+"use client";
 
-import { Easing, Variants } from "motion/react";
-
-export type FadeInVariantsType = {
-  duration?: number;
-  delay?: number;
-  ease?: Easing;
-};
+import { Variants } from "motion/react";
 
 export const fadeInVariants: Variants = {
   hidden: {
     opacity: 0,
-    transform: "translateY(100%)",
+    transform: "translateX(-100%)",
   },
   visible: () => ({
     opacity: 1,
-    transform: "translateY(0)",
-    transition: { duration: 0.8, delay: 0.5, ease: 'easeIn' },
+    transform: "translateX(0)",
+    transition: { duration: 0.8, delay: 0.5, ease: "easeIn" },
+  }),
+};
+
+export const planeVariants: Variants = {
+  hidden: {
+    transform: "translateX(-100%)",
+  },
+  visible: () => ({
+    transform: "translateX(0)",
+    transition: { duration: 4, delay: 0.5, ease: "linear" },
   }),
 };
 
