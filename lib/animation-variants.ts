@@ -2,7 +2,22 @@
 
 import { Variants } from "motion/react";
 
-export const fadeInVariants: Variants = {
+export const fadeInCardVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    transform: "translateY(100%)",
+  },
+  visible: (custom) => ({
+    opacity: 1,
+    transform: "translateY(0)",
+    transition: {
+      delay: (custom + 1) / 5,
+      duration: 0.5,
+    },
+  }),
+};
+
+export const fadeInTitleVariants: Variants = {
   hidden: {
     opacity: 0,
     transform: "translateX(-100%)",
@@ -20,11 +35,11 @@ export const planeVariants: Variants = {
   },
   visible: () => ({
     transform: "translateX(0)",
-    transition: { duration: 4, delay: 0.5, ease: "linear" },
+    transition: { duration: 3, delay: 0.5, ease: "linear" },
   }),
 };
 
-export const accordionVariants: Variants = {
+export const listVariants: Variants = {
   hidden: {
     opacity: 0,
     x: "-100%",

@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 
 import { Container } from "@/components/shared/container";
 import { Title } from "@/components/shared/title";
-import { accordionVariants } from "@/lib/animation-variants";
+import { listVariants } from "@/lib/animation-variants";
 import { menuItems } from "@/data/menu-items";
 
 type MenuItemProps = {
@@ -37,7 +37,7 @@ export function Menu() {
               custom={index}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              variants={accordionVariants}
+              variants={listVariants}
               transition={{ delay: index * 0.2 }}
               className="flex items-center gap-4 py-2"
             >
