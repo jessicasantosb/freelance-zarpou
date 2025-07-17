@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-  import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
 import "./globals.css";
 
@@ -9,6 +9,7 @@ import { Header } from "@/components/header";
 
 const poppins = Poppins({
   variable: "--font-poppins",
+  subsets: ["latin"],
   weight: "400",
 });
 
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
     default: "Zarpou",
     template: "Zarpou | %s",
   },
-  description: "Descubra a Zarpou Viagens: agência online com pacotes personalizados, preços justos e uma plataforma segura para planejar sua próxima viagem.",
+  description:
+    "Descubra a Zarpou Viagens: agência online com pacotes personalizados, preços justos e uma plataforma segura para planejar sua próxima viagem.",
   icons: {
     icon: "/logo/logo-image-light.svg",
   },
