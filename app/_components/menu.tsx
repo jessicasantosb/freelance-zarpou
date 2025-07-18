@@ -80,7 +80,7 @@ const MenuItem = ({ src, text }: MenuItemProps) => {
       <div className="relative size-14 flex flex-col">
         <Image alt={text} src={src} fill className="absolute object-cover" />
       </div>
-      <p className="text-black/80">{text}</p>
+      <p className="text-black/80 leading-6">{text}</p>
     </>
   );
 };
