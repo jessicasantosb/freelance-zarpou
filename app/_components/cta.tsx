@@ -1,8 +1,21 @@
+"use client";
+
+import { useInView } from "react-intersection-observer";
+import * as motion from "motion/react-client";
 import { ContactButton } from "@/components/shared/contact-button";
+import { fromBottomVariants } from "@/lib/animation-variants";
 
 export function Cta() {
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
+
   return (
-    <section className="h-[40svh] md:h-[60svh] grid grid-cols-1 md:grid-cols-2 mt-12 mb-16 shadow-xl">
+    <div
+      ref={ref}
+      className="h-[40svh] md:h-[60svh] grid grid-cols-1 md:grid-cols-2 mt-12 mb-16 shadow-xl"
+    >
       {/* Vídeo de Micaela Alejandro: https://www.pexels.com/pt-br/video/praia-litoral-espuma-oceano-10758010/ */}
       <video
         src="/cta.mp4"
@@ -12,16 +25,20 @@ export function Cta() {
         playsInline
         className="hidden md:block w-full h-[60svh] object-cover"
       />
-
       <div className="flex-1 p-4 flex flex-col items-center justify-center bg-[#1e5f98] text-white text-center">
-        <h1 className="text-2xl md:text-4xl font-bold">
-          Garanta um futuro cheio de possibilidades
-        </h1>
-        <p className="py-4 text-md md:text-lg">
-          O futuro é promissor para quem se antecipa
-        </p>
-        <ContactButton>Vamos conversar</ContactButton>
+        <motion.div
+          animate={inView ? "visible" : "hidden"}
+          variants={fromBottomVariants}
+        >
+          <h1 className="text-2xl md:text-4xl font-bold">
+            Garanta um futuro cheio de possibilidades
+          </h1>
+          <p className="py-4 text-md md:text-lg">
+            O futuro é promissor para quem se antecipa
+          </p>
+          <ContactButton>Vamos conversar</ContactButton>
+        </motion.div>
       </div>
-    </section>
+    </div>
   );
 }

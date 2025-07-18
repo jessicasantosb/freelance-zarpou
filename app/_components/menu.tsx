@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 
 import { Container } from "@/components/shared/container";
 import { Title } from "@/components/shared/title";
-import { listVariants } from "@/lib/animation-variants";
+import { fromRightVariants, listVariants } from "@/lib/animation-variants";
 import { menuItems } from "@/data/menu-items";
 
 type MenuItemProps = {
@@ -47,14 +47,19 @@ export function Menu() {
         </ul>
 
         <div className="hidden lg:flex flex-col">
-          <div className="relative size-[30rem] flex flex-col">
+          <motion.div
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={fromRightVariants}
+            className="relative size-[30rem] flex flex-col"
+          >
             <Image
               alt="aircraft"
               src={"/Trip-pana.svg"}
               fill
               className="absolute object-cover"
             />
-          </div>
+          </motion.div>
 
           <a
             href="https://storyset.com/travel"

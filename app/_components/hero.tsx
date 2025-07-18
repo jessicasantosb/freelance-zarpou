@@ -1,10 +1,21 @@
+"use client";
+
+import Link from "next/link";
+import { useInView } from "react-intersection-observer";
+import * as motion from "motion/react-client";
+
 import { CustomLink } from "@/components/shared/custom-link";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { fromBottomVariants } from "@/lib/animation-variants";
 
 export function Hero() {
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
+
   return (
-    <div className="relative w-full h-[100svh] overflow-hidden">
+    <div ref={ref} className="relative w-full h-[100svh] overflow-hidden">
       {/* Vídeo de Naveen G: https://www.pexels.com/pt-br/video/imagens-das-ondas-do-oceano-em-camera-lenta-3834452/ */}
       <video
         src="/waves.mp4"
@@ -17,7 +28,12 @@ export function Hero() {
 
       <div className="absolute top-0 left-0 w-full h-full bg-primary/50 z-10" />
 
-      <div className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-4">
+      <motion.div
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        variants={fromBottomVariants}
+        className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-4"
+      >
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
           Do seu jeito,
         </h1>
@@ -36,9 +52,12 @@ export function Hero() {
               Converse conosco
             </Link>
           </Button>
-          <CustomLink link="https://app.onertravel.com/zarpouviagens/home" text="Nossas ofertas" />
+          <CustomLink
+            link="https://app.onertravel.com/zarpouviagens/home"
+            text="Nossas ofertas"
+          />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

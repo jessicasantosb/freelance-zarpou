@@ -2,6 +2,28 @@
 
 import { Variants } from "motion/react";
 
+export const fromBottomVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    transform: "translateY(30%)",
+  },
+  visible: () => ({
+    opacity: 1,
+     transform: "translateY(0)",
+    transition: { duration: 0.5, delay: 0.2, ease: "easeIn" },
+  }),
+};
+
+export const fromRightVariants: Variants = {
+  hidden: {
+    transform: "translateX(100%)",
+  },
+  visible: () => ({
+    transform: "translateX(0)",
+    transition: { duration: 0.6, delay: 0.5, ease: "linear" },
+  }),
+};
+
 export const fadeInCardVariants: Variants = {
   hidden: {
     opacity: 0,
@@ -20,12 +42,12 @@ export const fadeInCardVariants: Variants = {
 export const fadeInTitleVariants: Variants = {
   hidden: {
     opacity: 0,
-    transform: "translateX(-100%)",
+    transform: "translateY(-30%)",
   },
   visible: () => ({
     opacity: 1,
-    transform: "translateX(0)",
-    transition: { duration: 0.8, delay: 0.5, ease: "easeIn" },
+    transform: "translateY(0)",
+    transition: { duration: 0.5, delay: 0.2, ease: "easeIn" },
   }),
 };
 
@@ -35,7 +57,7 @@ export const planeVariants: Variants = {
   },
   visible: () => ({
     transform: "translateX(0)",
-    transition: { duration: 3, delay: 0.5, ease: "linear" },
+    transition: { duration: 2, delay: 0.5, ease: "linear" },
   }),
 };
 
