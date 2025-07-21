@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FooterTop } from "./footer-top";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -11,9 +12,18 @@ export function Footer() {
           <div className="flex flex-col items-center">
             <p className="flex flex-col items-center md:flex-row md:gap-4">
               Zarpou Viagens e Turismo. Todos os direitos reservados.
-              <span>CNPJ: 000000000 | Brasil</span>
+              <span>CNPJ: {process.env.NEXT_PUBLIC_CNPJ} | Brasil</span>
+              <span className="flex gap-2 px-1">
+                <Image
+                  alt="cadastur"
+                  src={"/cadastur.svg"}
+                  height={20}
+                  width={100}
+                />{" "}
+                {process.env.NEXT_PUBLIC_CNPJ}
+              </span>
             </p>
-            <div className="w-full flex justify-center md:justify-start gap-2 [&>*]:underline">
+            <div className="w-full pt-2 md:pt-0 flex justify-center md:justify-start gap-2 [&>*]:underline">
               <Link
                 target="_blank"
                 href={
