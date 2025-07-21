@@ -40,7 +40,7 @@ export function Questions() {
           <div className="w-full">
             <p className="text-muted-foreground">Prefere email?</p>
             <Button variant={"link"} className="text-lg" onClick={handleCopy}>
-              email@email.com
+              {process.env.NEXT_PUBLIC_EMAIL}
               <Copy />
             </Button>
           </div>
