@@ -24,19 +24,6 @@ export const metadata: Metadata = {
   icons: {
     icon: "/logo/logo-image-light.svg",
   },
-  openGraph: {
-    title: "Zarpou Viagens e Turismo",
-    description:
-      "Descubra a Zarpou Viagens: agência online com pacotes personalizados, preços justos e uma plataforma segura para planejar sua próxima viagem.",
-    images: ["/logo/logo.svg"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Zarpou Viagens e Turismo",
-    description:
-      "Descubra a Zarpou Viagens: agência online com pacotes personalizados e seguros.",
-    images: ["/logo/logo.svg"],
-  },
 };
 
 export default function RootLayout({
