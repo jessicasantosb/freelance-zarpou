@@ -33,7 +33,7 @@ export const generateMessage = ({
 📧 *Email:* ${client.email}  
 📞 *Telefone:* ${client.phone}  
 
-━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━
 
 🟧 *DESTINO DA VIAGEM* 🟧  
 🌍 *Destino:* _${destination}_  
@@ -43,7 +43,7 @@ export const generateMessage = ({
 }  
 🎯 *Tipo de viagem:* ${travelType}  
 
-━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━
 
 🟨 *DETALHES DA VIAGEM* 🟨  
 🏨 *Acomodação:* ${accommodationPreference}  
