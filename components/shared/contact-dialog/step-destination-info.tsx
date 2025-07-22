@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,11 +17,14 @@ import { useInfoStore } from "@/stores/info-store";
 import { SetStepProps } from "@/types/checkout-steps";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formateDate } from "@/lib/formateDate";
+import { generateJumpedDataLink } from "@/lib/generate-jumped-link";
 
 export function StepDestinationInfo({ setStep }: SetStepProps) {
-  const { destinationInfo, setDestinationInfo } = useInfoStore(
+  const { client, destinationInfo, setDestinationInfo } = useInfoStore(
     (state) => state
   );
+
+  const link = generateJumpedDataLink({ client });
 
   const form = useForm<z.infer<typeof stepInfoSchema>>({
     resolver: zodResolver(stepInfoSchema),
@@ -33,7 +37,7 @@ export function StepDestinationInfo({ setStep }: SetStepProps) {
 
     const formattedStartDate = formateDate(startDate);
     const formattedEndDate = formateDate(endDate);
-    
+
     setDestinationInfo({
       ...values,
       startDate: formattedStartDate,
@@ -145,9 +149,17 @@ export function StepDestinationInfo({ setStep }: SetStepProps) {
           >
             Voltar
           </Button>
-          <Button type="submit" className="bg-secondary">
-            Próximo
-          </Button>
+          <div>
+            <Button type="button" variant={"link"}>
+              <Link href={link} target="_blank" className="size-full">
+                Pular
+              </Link>
+            </Button>
+
+            <Button type="submit" className="bg-secondary">
+              Próximo
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

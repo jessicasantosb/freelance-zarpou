@@ -15,17 +15,21 @@ import { stepInfoSchema } from "@/schemas/step-travel-info";
 import { useInfoStore } from "@/stores/info-store";
 import { SetStepProps } from "@/types/checkout-steps";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { generateJumpedDataLink } from "@/lib/generate-jumped-link";
+import Link from "next/link";
 
 export function StepTravelInfo({ setStep }: SetStepProps) {
-  const { travelInfo, setTravelInfo } = useInfoStore((state) => state);
+  const { client, travelInfo, setTravelInfo } = useInfoStore((state) => state);
+
+  const link = generateJumpedDataLink({ client });
 
   const form = useForm<z.infer<typeof stepInfoSchema>>({
     resolver: zodResolver(stepInfoSchema),
     defaultValues: { ...travelInfo },
   });
 
-  const onSubmit = (values: z.infer<typeof stepInfoSchema>) => {    
-    setTravelInfo(values)
+  const onSubmit = (values: z.infer<typeof stepInfoSchema>) => {
+    setTravelInfo(values);
     setStep("finish");
   };
 
@@ -195,9 +199,17 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
           >
             Voltar
           </Button>
-          <Button type="submit" className="bg-secondary">
-            Finalizar
-          </Button>
+
+          <div>
+            <Button type="button" variant={"link"}>
+              <Link href={link} target="_blank" className="size-full">
+                Pular
+              </Link>
+            </Button>
+            <Button type="submit" className="bg-secondary">
+              Finalizar
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

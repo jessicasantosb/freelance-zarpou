@@ -1,6 +1,13 @@
 import { States } from "@/stores/info-store";
 
 type GenerateMessageProps = States;
+type GenerateJumpedMessageProps = {
+  client: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+};
 
 export const generateMessage = ({
   client,
@@ -39,8 +46,8 @@ export const generateMessage = ({
 🌍 *Destino:* _${destination}_  
 📅 *Período:* de ${startDate} até ${endDate}  
 👨‍👩‍👧 *Pessoas:* ${numberOfAdults} adulto(s) ${
-  numberOfChildren ? `e ${numberOfChildren} criança(s)` : ""
-}  
+    numberOfChildren ? `e ${numberOfChildren} criança(s)` : ""
+  }  
 🎯 *Tipo de viagem:* ${travelType}  
 
 ━━━━━━━━━━━━━━━━━━━━━━
@@ -56,5 +63,18 @@ export const generateMessage = ({
 ♿ *Necessidades especiais:* ${otherSpecialNeeds}  
 
 📝 *Informações adicionais:* ${additionalInfo || "Nenhuma"}
+`;
+};
+
+export const generateJumpedMessage = ({
+  client,
+}: GenerateJumpedMessageProps) => {
+  return `
+🟦 *DADOS DO CLIENTE* 🟦  
+👤 *Nome:* _${client.name}_  
+📧 *Email:* ${client.email}  
+📞 *Telefone:* ${client.phone}
+
+Gostaria de saber mais informações!
 `;
 };
