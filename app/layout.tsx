@@ -14,6 +14,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.zarpouviagens.com.br"),
   title: {
     default: "Zarpou Viagens e Turismo",
     template: "Zarpou | %s",
@@ -27,17 +28,7 @@ export const metadata: Metadata = {
     title: "Zarpou Viagens e Turismo",
     description:
       "Descubra a Zarpou Viagens: agência online com pacotes personalizados, preços justos e uma plataforma segura para planejar sua próxima viagem.",
-    url: "/logo/logo.svg",
-    siteName: "Zarpou",
-    images: [
-      {
-        url: "/logo/logo.svg",
-        width: 1200,
-        height: 630,
-        alt: "Logo da Zarpou Viagens",
-      },
-    ],
-    type: "website",
+    images: ["/og-image.jpg"],
   },
   twitter: {
     card: "summary_large_image",
