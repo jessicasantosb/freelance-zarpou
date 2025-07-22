@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     icon: "/logo/logo-image-light.svg",
   },
   openGraph: {
-    images: ["/logo/logo.png"],
+    images: [`${process.env.NEXT_PUBLIC_OPENGRAPH_IMG}`],
   },
 };
 
