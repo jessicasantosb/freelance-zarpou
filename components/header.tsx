@@ -16,7 +16,7 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 px-8 py-4 flex items-center justify-between gap-4 transition-all duration-300 ease-in-out
+      className={`fixed top-0 w-full z-50 px-8 py-4 flex items-center justify-between gap-4 transition-all duration-300 ease-in-out select-none
         ${
           scrolled || !bgTransparent
             ? "bg-[#f2dfb5] text-primary shadow-md opacity-90"

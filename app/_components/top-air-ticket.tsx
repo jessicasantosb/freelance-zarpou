@@ -37,7 +37,7 @@ export function TopAirTicket() {
           animate={airplaneInView ? "visible" : "hidden"}
           variants={planeVariants}
           transition={{ delay: 0.2 }}
-          className="block relative w-dvw lg:w-[80dvw] h-72 2xl:h-96 -mb-32 -mt-8 -ml-28 sm:-mb-24 sm:-mt-0 md:-mb-16 md:-ml-72"
+          className="block select-none relative w-dvw lg:w-[80dvw] h-72 2xl:h-96 -mb-32 -mt-8 -ml-28 sm:-mb-24 sm:-mt-0 md:-mb-16 md:-ml-72"
         >
           <Image
             alt="aircraft"

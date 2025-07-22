@@ -51,7 +51,7 @@ export function Menu() {
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             variants={fromRightVariants}
-            className="relative size-[30rem] flex flex-col"
+            className="relative size-[30rem] flex flex-col select-none"
           >
             <Image
               alt="aircraft"
@@ -77,7 +77,7 @@ export function Menu() {
 const MenuItem = ({ src, text }: MenuItemProps) => {
   return (
     <>
-      <div className="relative size-14 flex flex-col">
+      <div className="relative size-14 flex flex-col select-none">
         <Image alt={text} src={src} fill className="absolute object-cover" />
       </div>
       <p className="text-black/80 leading-6">{text}</p>

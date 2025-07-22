@@ -15,7 +15,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: "Zarpou",
+    default: "Zarpou Viagens e Turismo",
     template: "Zarpou | %s",
   },
   description:

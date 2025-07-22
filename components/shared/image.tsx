@@ -37,7 +37,7 @@ export function CustomImage({ alt, src, rounded }: CustomImageProps) {
           src={src}
           fill
           sizes="auto"
-          className={`absolute object-cover animate-in fade-in duration-700 ${rounded}`}
+          className={`absolute object-cover animate-in fade-in duration-700 select-none ${rounded}`}
           onLoad={handleLoad}
           priority
         />

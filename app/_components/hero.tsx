@@ -15,7 +15,7 @@ export function Hero() {
   });
 
   return (
-    <div ref={ref} className="relative w-full h-[100svh] overflow-hidden">
+    <div ref={ref} className="relative w-full h-[100svh] overflow-hidden select-none">
       {/* Vídeo de Naveen G: https://www.pexels.com/pt-br/video/imagens-das-ondas-do-oceano-em-camera-lenta-3834452/ */}
       <video
         src="/waves.mp4"
