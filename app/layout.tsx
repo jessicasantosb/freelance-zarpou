@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "Zarpou Viagens e Turismo",
     description:
       "Descubra a Zarpou Viagens: agência online com pacotes personalizados, preços justos e uma plataforma segura para planejar sua próxima viagem.",
-    images: ["/og-image.jpg"],
+    images: ["/logo/logo.svg"],
   },
   twitter: {
     card: "summary_large_image",
