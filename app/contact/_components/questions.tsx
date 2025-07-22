@@ -44,7 +44,7 @@ export function Questions() {
               <Copy />
             </Button>
           </div>
-          <ContactButton>entrar em contato</ContactButton>
+          <ContactButton>Entrar em contato</ContactButton>
         </motion.div>
 
         <motion.div

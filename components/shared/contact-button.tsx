@@ -16,14 +16,14 @@ export function ContactButton({
   return (
     <>
       <Button
-        className="shadow-md shadow-secondary tracking-wider cursor-pointer text-lg"
+        variant={"whatsapp"}
         size={"lg"}
         onClick={() => setCheckoutOpen(true)}
       >
         {children}
         <Image
           alt="whatsapp"
-          src={"/icons/whatsapp-black.svg"}
+          src={"/icons/whatsapp-white.svg"}
           width={20}
           height={20}
         />
