@@ -1,32 +1,69 @@
 import { create } from "zustand";
 
 export type States = {
-  name: string;
-  info: {
-    destiny: string;
-    date: string;
-    count: string;
-    description?: string;
+  client: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+  destinationInfo: {
+    destination: string;
+    startDate: string;
+    endDate: string;
+    numberOfAdults: string;
+    numberOfChildren?: string;
+    travelType: string;
+  };
+  travelInfo: {
+    accommodationPreference: string;
+    roomType: string;
+    mealPlan: string;
+    transportation: string;
+    internalTransportation: string;
+    estimatedBudget: string;
+    dietaryRestrictions?: string;
+    otherSpecialNeeds?: string;
+    additionalInfo?: string;
   };
 };
 
 type Actions = {
-  setName: (name: States["name"]) => void;
-  setInfo: (info: States["info"]) => void;
+  setClient: (name: States["client"]) => void;
+  setDestinationInfo: (info: States["destinationInfo"]) => void;
+  setTravelInfo: (info: States["travelInfo"]) => void;
 };
 
 const initialState: States = {
-  name: "",
-  info: {
-    destiny: "",
-    date: "",
-    count: "",
-    description: "",
+  client: {
+    name: "",
+    email: "",
+    phone: "",
+  },
+  destinationInfo: {
+    destination: "",
+    startDate: "",
+    endDate: "",
+    numberOfAdults: "",
+    numberOfChildren: "",
+    travelType: "",
+  },
+  travelInfo: {
+    accommodationPreference: "",
+    roomType: "",
+    mealPlan: "",
+    transportation: "",
+    internalTransportation: "",
+    estimatedBudget: "",
+    dietaryRestrictions: "",
+    otherSpecialNeeds: "",
+    additionalInfo: "",
   },
 };
 
 export const useInfoStore = create<States & Actions>()((set) => ({
   ...initialState,
-  setName: (name) => set((state) => ({ ...state, name })),
-  setInfo: (info) => set((state) => ({ ...state, info })),
+  setClient: (client) => set((state) => ({ ...state, client })),
+  setDestinationInfo: (destinationInfo) =>
+    set((state) => ({ ...state, destinationInfo })),
+  setTravelInfo: (travelInfo) => set((state) => ({ ...state, travelInfo })),
 }));

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,16 +19,16 @@ import { useInfoStore } from "@/stores/info-store";
 import { SetStepProps } from "@/types/checkout-steps";
 
 export function StepUser({ setStep }: SetStepProps) {
-  const { name, setName } = useInfoStore((state) => state);
+  const { client, setClient } = useInfoStore((state) => state);
 
   const form = useForm<z.infer<typeof stepUserSchema>>({
     resolver: zodResolver(stepUserSchema),
-    defaultValues: { name },
+    defaultValues: { ...client },
   });
 
-  const onSubmit = (values: z.infer<typeof stepUserSchema>) => {
-    setName(values.name);
-    setStep("info");
+  const onSubmit = ({ name, email, phone }: z.infer<typeof stepUserSchema>) => {
+    setClient({ name, email, phone });
+    setStep("destinationInfo");
   };
 
   return (
@@ -45,6 +45,39 @@ export function StepUser({ setStep }: SetStepProps) {
               <FormLabel>Nome</FormLabel>
               <FormControl>
                 <Input autoFocus placeholder="Digite seu nome" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="email"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  type="email"
+                  placeholder="Digite seu email"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="phone"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Telefone de contato</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Digite seu número"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

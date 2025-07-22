@@ -2,15 +2,59 @@ import { States } from "@/stores/info-store";
 
 type GenerateMessageProps = States;
 
-export const generateMessage = ({ name, info }: GenerateMessageProps) => {
-  const { date, count, destiny, description } = info;
+export const generateMessage = ({
+  client,
+  destinationInfo,
+  travelInfo,
+}: GenerateMessageProps) => {
+  const {
+    destination,
+    endDate,
+    startDate,
+    travelType,
+    numberOfAdults,
+    numberOfChildren,
+  } = destinationInfo;
+  const {
+    accommodationPreference,
+    estimatedBudget,
+    transportation,
+    additionalInfo,
+    dietaryRestrictions,
+    internalTransportation,
+    mealPlan,
+    otherSpecialNeeds,
+    roomType,
+  } = travelInfo;
 
-  return `*Dados do Cliente:*
+  return `
+🟦 *DADOS DO CLIENTE* 🟦  
+👤 *Nome:* _${client.name}_  
+📧 *Email:* ${client.email}  
+📞 *Telefone:* ${client.phone}  
 
-*Nome:* ${name}
-*Destino:* ${destiny}
-*Data da viagem:* ${date}
-*Quantidate de pessoas:* ${count}
-*Motivo de contato:* ${description}
+━━━━━━━━━━━━━━━━━━━━
+
+🟧 *DESTINO DA VIAGEM* 🟧  
+🌍 *Destino:* _${destination}_  
+📅 *Período:* de ${startDate} até ${endDate}  
+👨‍👩‍👧 *Pessoas:* ${numberOfAdults} adulto(s) ${
+  numberOfChildren ? `e ${numberOfChildren} criança(s)` : ""
+}  
+🎯 *Tipo de viagem:* ${travelType}  
+
+━━━━━━━━━━━━━━━━━━━━
+
+🟨 *DETALHES DA VIAGEM* 🟨  
+🏨 *Acomodação:* ${accommodationPreference}  
+🛏️ *Tipo de quarto:* ${roomType}  
+🍽️ *Alimentação:* ${mealPlan}  
+🚌 *Transporte principal:* ${transportation}  
+🚗 *Transporte interno:* ${internalTransportation}  
+💰 *Orçamento estimado (por pessoa):* ${estimatedBudget}  
+🥗 *Restrições alimentares:* ${dietaryRestrictions}  
+♿ *Necessidades especiais:* ${otherSpecialNeeds}  
+
+📝 *Informações adicionais:* ${additionalInfo || "Nenhuma"}
 `;
 };

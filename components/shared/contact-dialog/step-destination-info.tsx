@@ -11,65 +11,64 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { stepInfoSchema } from "@/schemas/step-info";
+import { stepInfoSchema } from "@/schemas/step-destination-info";
 import { useInfoStore } from "@/stores/info-store";
 import { SetStepProps } from "@/types/checkout-steps";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "@/components/ui/textarea";
+import { formateDate } from "@/lib/formateDate";
 
-export function StepInfo({ setStep }: SetStepProps) {
-  const { info, setInfo } = useInfoStore((state) => state);
+export function StepDestinationInfo({ setStep }: SetStepProps) {
+  const { destinationInfo, setDestinationInfo } = useInfoStore(
+    (state) => state
+  );
 
   const form = useForm<z.infer<typeof stepInfoSchema>>({
     resolver: zodResolver(stepInfoSchema),
-    defaultValues: { ...info },
+    defaultValues: { ...destinationInfo },
   });
 
   const onSubmit = (values: z.infer<typeof stepInfoSchema>) => {
-    const date = new Date(values.date);
+    const startDate = new Date(values.startDate);
+    const endDate = new Date(values.endDate);
 
-    const formattedDate = date.toLocaleDateString("pt-BR", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-
-    setInfo({
+    const formattedStartDate = formateDate(startDate);
+    const formattedEndDate = formateDate(endDate);
+    
+    setDestinationInfo({
       ...values,
-      date: formattedDate,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
     });
-    setStep("finish");
+    setStep("travelInfo");
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mb-4 grid grid-cols-2 gap-2">
+        <FormField
+          name="destination"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Destino de interesse</FormLabel>
+              <FormControl>
+                <Input
+                  autoFocus
+                  placeholder="Ex: Nordeste / Não sei ainda"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="my-4 grid grid-cols-2 gap-2">
           <FormField
-            name="destiny"
+            name="startDate"
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Destino de interesse</FormLabel>
-                <FormControl>
-                  <Input
-                    autoFocus
-                    placeholder="Ex: Nordeste / Não sei ainda"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            name="date"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Data da viagem (aproximada)</FormLabel>
+                <FormLabel>Início da viagem (aproximada)</FormLabel>
                 <FormControl>
                   <Input type="date" {...field} />
                 </FormControl>
@@ -79,28 +78,57 @@ export function StepInfo({ setStep }: SetStepProps) {
           />
 
           <FormField
-            name="count"
+            name="endDate"
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Número de pessoas</FormLabel>
+                <FormLabel>Fim da viagem (aproximado)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Ex: 2 adultos e 1 criança" {...field} />
+                  <Input type="date" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="numberOfAdults"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Número de adultos</FormLabel>
+                <FormControl>
+                  <Input placeholder="Ex: 2 adultos" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            name="numberOfChildren"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Número de crianças</FormLabel>
+                <FormControl>
+                  <Input placeholder="Ex: 1 criança de 8 anos" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+
         <FormField
-          name="description"
+          name="travelType"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Motivo do contato / Mensagem</FormLabel>
+              <FormLabel>Tipo de viagem</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Ex: Quero saber mais sobre pacotes para o Nordeste com hotel all inclusive."
+                <Input
+                  placeholder="Ex: lazer, negócios, aventura, etc."
                   {...field}
                 />
               </FormControl>
@@ -118,7 +146,7 @@ export function StepInfo({ setStep }: SetStepProps) {
             Voltar
           </Button>
           <Button type="submit" className="bg-secondary">
-            Finalizar
+            Próximo
           </Button>
         </div>
       </form>

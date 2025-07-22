@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 import { StepFinish } from "@/components/shared/contact-dialog/step-finish";
-import { StepInfo } from "@/components/shared/contact-dialog/step-info";
+import { StepDestinationInfo } from "@/components/shared/contact-dialog/step-destination-info";
 import { StepUser } from "@/components/shared/contact-dialog/step-user";
 import {
   Dialog,
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { StepsProps } from "@/types/checkout-steps";
+import { StepTravelInfo } from "./step-travel-info";
 
 type ContactDialogProps = {
   open: boolean;
@@ -30,14 +31,19 @@ export function ContactDialog({ open, onOpenChange }: ContactDialogProps) {
 
   const elements: Record<StepsProps, StepsElementsProps> = {
     user: {
-      progressBar: 30,
+      progressBar: 25,
       stepTitle: "Dados Pessoais",
       stepField: <StepUser setStep={setStep} />,
     },
-    info: {
-      progressBar: 70,
-      stepTitle: "Informações",
-      stepField: <StepInfo setStep={setStep} />,
+    destinationInfo: {
+      progressBar: 50,
+      stepTitle: "Informações do destino",
+      stepField: <StepDestinationInfo setStep={setStep} />,
+    },
+    travelInfo: {
+      progressBar: 75,
+      stepTitle: "Informações da viagem",
+      stepField: <StepTravelInfo setStep={setStep} />,
     },
     finish: {
       progressBar: 100,
