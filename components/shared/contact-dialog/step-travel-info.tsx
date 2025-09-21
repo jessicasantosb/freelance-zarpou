@@ -42,7 +42,7 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Preferências de acomodação</FormLabel>
+                <FormLabel required>Preferências de acomodação</FormLabel>
                 <FormControl>
                   <Input
                     autoFocus
@@ -60,7 +60,7 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tipo de quarto</FormLabel>
+                <FormLabel required>Tipo de quarto</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Ex: individual, duplo, família, etc."
@@ -77,7 +77,7 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Regime de alimentação desejado</FormLabel>
+                <FormLabel required>Regime de alimentação desejado</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Ex: café da manhã, meia pensão, pensão completa, etc."
@@ -94,7 +94,7 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Transporte</FormLabel>
+                <FormLabel required>Transporte</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Ex: aéreo, terrestre, marítimo"
@@ -111,7 +111,7 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Transporte interno desejado</FormLabel>
+                <FormLabel required>Transporte interno desejado</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Ex: aluguel de carro, transporte público, transfers"
@@ -128,7 +128,7 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
+                <FormLabel required>
                   Orçamento estimado para a viagem (por pessoa):
                 </FormLabel>
                 <FormControl>

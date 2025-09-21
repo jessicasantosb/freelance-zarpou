@@ -13,13 +13,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Contact } from "@/schemas/contact";
+import { Contact, contactSchema } from "@/schemas/contact";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { sendContactEmail } from "@/services/send-contact-email";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { formatCellphone } from "@/lib/format-cellphone";
 
 export function ContactForm() {
-  const form = useForm<Contact>();
+  const form = useForm<Contact>({
+    resolver: zodResolver(contactSchema),
+  });
 
   const onSubmit = async (values: Contact) => {
     try {
@@ -46,7 +50,7 @@ export function ContactForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            <div className="flex flex-col md:flex-row gap-6 [&>*]:w-full">
+            <div className="flex flex-col items-start md:flex-row gap-6 [&>*]:w-full">
               <FormField
                 name="name"
                 control={form.control}
@@ -74,9 +78,18 @@ export function ContactForm() {
                     <FormLabel>Celular</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Digite seu número de celular"
-                        {...field}
+                        placeholder="(00) 00000-0000"
+                        value={formatCellphone(String(field.value ?? ""))}
+                        maxLength={15}
                         className="h-10"
+                        onChange={(e) => {
+                          const rawValue = e.target.value
+                            .replace(/\D/g, "")
+                            .slice(0, 11);
+                          field.onChange(
+                            rawValue === "" ? undefined : rawValue
+                          );
+                        }}
                       />
                     </FormControl>
                     <FormMessage />

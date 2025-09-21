@@ -25,8 +25,8 @@ export function DropdownMenu({ scrolled }: DropdownMenuProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  const aboutPage = pathname === "/about";
-  const contactPage = pathname === "/contact";
+  const aboutPage = pathname === "/sobre";
+  const contactPage = pathname === "/contato";
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -64,7 +64,7 @@ export function DropdownMenu({ scrolled }: DropdownMenuProps) {
 
           <SheetClose asChild>
             <Link
-              href={"/contact"}
+              href={"/contato"}
               onClick={() => setOpen(true)}
               className={`flex items-center gap-2 pb-6 ${
                 contactPage && "underline"
@@ -82,7 +82,7 @@ export function DropdownMenu({ scrolled }: DropdownMenuProps) {
 
           <SheetClose asChild>
             <Link
-              href={"/about"}
+              href={"/sobre"}
               className={`flex items-center gap-2 ${aboutPage && "underline"}`}
             >
               <Image

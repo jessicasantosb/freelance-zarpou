@@ -10,8 +10,8 @@ export function Header() {
   const pathname = usePathname();
   const scrolled = useScrollState();
 
-  const aboutPage = pathname === "/about";
-  const contactPage = pathname === "/contact";
+  const aboutPage = pathname === "/sobre";
+  const contactPage = pathname === "/contato";
 
   return (
     <header
@@ -28,7 +28,7 @@ export function Header() {
       <div className="flex items-center gap-6">
         <div className="hidden md:flex items-center gap-6">
           <Link
-            href="/contact"
+            href="/contato"
             className={`underline-offset-2 hover:underline hover:opacity-90 ${
               contactPage && "underline"
             }`}
@@ -36,7 +36,7 @@ export function Header() {
             Contato
           </Link>
           <Link
-            href="/about"
+            href="/sobre"
             className={`underline-offset-2 hover:underline hover:opacity-90 ${
               aboutPage && "underline"
             }`}

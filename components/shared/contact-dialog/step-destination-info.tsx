@@ -54,7 +54,7 @@ export function StepDestinationInfo({ setStep }: SetStepProps) {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Destino de interesse</FormLabel>
+              <FormLabel required>Destino de interesse</FormLabel>
               <FormControl>
                 <Input
                   autoFocus
@@ -72,7 +72,7 @@ export function StepDestinationInfo({ setStep }: SetStepProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Início da viagem (aproximada)</FormLabel>
+                <FormLabel required>Início da viagem (aproximada)</FormLabel>
                 <FormControl>
                   <Input type="date" {...field} />
                 </FormControl>
@@ -86,7 +86,7 @@ export function StepDestinationInfo({ setStep }: SetStepProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Fim da viagem (aproximado)</FormLabel>
+                <FormLabel required>Fim da viagem (aproximado)</FormLabel>
                 <FormControl>
                   <Input type="date" {...field} />
                 </FormControl>
@@ -100,7 +100,7 @@ export function StepDestinationInfo({ setStep }: SetStepProps) {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Número de adultos</FormLabel>
+                <FormLabel required>Número de adultos</FormLabel>
                 <FormControl>
                   <Input placeholder="Ex: 2 adultos" {...field} />
                 </FormControl>
@@ -129,7 +129,7 @@ export function StepDestinationInfo({ setStep }: SetStepProps) {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tipo de viagem</FormLabel>
+              <FormLabel required>Tipo de viagem</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Ex: lazer, negócios, aventura, etc."

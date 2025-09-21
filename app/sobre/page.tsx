@@ -15,7 +15,7 @@ export default function AboutPage() {
         <h1 className="max-w-4xl text-5xl md:text-7xl font-bold tracking-tight leading-14 md:leading-20">
           Muito mais do que uma agência: sua{" "}
           <span className="text-secondary">parceira de viagens</span> com
-          segurança, personalização e suporte total.
+          segurança, personalização e suporte total
         </h1>
       </Hero>
 

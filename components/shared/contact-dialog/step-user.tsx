@@ -17,13 +17,17 @@ import { Input } from "@/components/ui/input";
 import { stepUserSchema } from "@/schemas/step-user";
 import { useInfoStore } from "@/stores/info-store";
 import { SetStepProps } from "@/types/checkout-steps";
+import { formatCellphone } from "@/lib/format-cellphone";
 
 export function StepUser({ setStep }: SetStepProps) {
   const { client, setClient } = useInfoStore((state) => state);
 
   const form = useForm<z.infer<typeof stepUserSchema>>({
     resolver: zodResolver(stepUserSchema),
-    defaultValues: { ...client },
+    defaultValues: { 
+      ...client,
+      phone: client.phone || ""
+    },
   });
 
   const onSubmit = ({ name, email, phone }: z.infer<typeof stepUserSchema>) => {
@@ -42,7 +46,7 @@ export function StepUser({ setStep }: SetStepProps) {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nome</FormLabel>
+              <FormLabel required>Nome</FormLabel>
               <FormControl>
                 <Input autoFocus placeholder="Digite seu nome" {...field} />
               </FormControl>
@@ -55,13 +59,9 @@ export function StepUser({ setStep }: SetStepProps) {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel required>Email</FormLabel>
               <FormControl>
-                <Input
-                  type="email"
-                  placeholder="Digite seu email"
-                  {...field}
-                />
+                <Input type="email" placeholder="Digite seu email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -72,11 +72,16 @@ export function StepUser({ setStep }: SetStepProps) {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Telefone de contato</FormLabel>
+              <FormLabel required>Telefone de contato</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite seu número"
-                  {...field}
+                  placeholder="(00) 00000-0000"
+                  value={formatCellphone(String(field.value ?? ""))}
+                  maxLength={15}
+                  onChange={(e) => {
+                    const rawValue = e.target.value.replace(/\D/g, "");
+                    field.onChange(rawValue);
+                  }}
                 />
               </FormControl>
               <FormMessage />
