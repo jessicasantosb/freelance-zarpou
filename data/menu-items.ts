@@ -5,23 +5,23 @@ type MenuItemsProps = {
 
 export const menuItems: MenuItemsProps[] = [
   {
-    src: "/icons/plane.svg",
+    src: "/home/passagem.jpg",
     text: "Passagem de avião",
   },
   {
-    src: "/icons/building.svg",
+    src: "/home/hospedagem.jpg",
     text: "Hospedagem",
   },
   {
-    src: "/icons/luggage.svg",
+    src: "/home/pacotes.jpg",
     text: "Pacote de viagem completo",
   },
   {
-    src: "/icons/ticket.svg",
+    src: "/home/ingressos.jpg",
     text: "Ingresso para shows",
   },
   {
-    src: "/icons/car.svg",
+    src: "/home/aluguel.jpg",
     text: "Aluguel de carros",
   },
 ];

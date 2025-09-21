@@ -4,8 +4,8 @@ import { ToastContainer } from "react-toastify";
 
 import "./globals.css";
 
-import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 
 const poppins = Poppins({
   variable: "--font-poppins",

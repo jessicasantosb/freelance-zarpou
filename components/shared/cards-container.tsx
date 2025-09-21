@@ -1,13 +1,20 @@
+type CardsContainerProps = {
+  children: React.ReactNode;
+  mdOverflowVisible?: boolean;
+};
+
 export function CardsContainer({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  mdOverflowVisible,
+}: CardsContainerProps) {
   return (
-    <div className="w-full flex">
-      <div className="flex-1 w-full py-8 flex gap-4 overflow-x-auto md:overflow-hidden">
-        {children}
-      </div>
+    <div
+      data-slot="cards-container"
+      className={`w-full py-8 px-2 flex gap-4 overflow-auto overflow-y-hidden ${
+        mdOverflowVisible && "md:overflow-visible"
+      }`}
+    >
+      {children}
     </div>
   );
 }

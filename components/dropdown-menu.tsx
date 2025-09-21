@@ -15,6 +15,7 @@ import {
 } from "./ui/sheet";
 import Image from "next/image";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 type DropdownMenuProps = {
   scrolled: boolean;
@@ -22,6 +23,10 @@ type DropdownMenuProps = {
 
 export function DropdownMenu({ scrolled }: DropdownMenuProps) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const aboutPage = pathname === "/about";
+  const contactPage = pathname === "/contact";
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -40,26 +45,30 @@ export function DropdownMenu({ scrolled }: DropdownMenuProps) {
 
         <div className="pt-4 pl-4 text-xl">
           <SheetClose asChild>
-          <Link
-            href={"/"}
-            onClick={() => setOpen(true)}
-            className="flex items-center gap-2 pb-6"
-          >
-            <Image
-              alt="contact"
-              src={"/icons/home.svg"}
-              width={40}
-              height={40}
-            />
-            Página inicial
-          </Link>
+            <Link
+              href={"/"}
+              onClick={() => setOpen(true)}
+              className={`flex items-center gap-2 pb-6 ${
+                pathname === "/" && "underline"
+              }`}
+            >
+              <Image
+                alt="contact"
+                src={"/icons/home.svg"}
+                width={40}
+                height={40}
+              />
+              Página inicial
+            </Link>
           </SheetClose>
 
           <SheetClose asChild>
             <Link
               href={"/contact"}
               onClick={() => setOpen(true)}
-              className="flex items-center gap-2 pb-6"
+              className={`flex items-center gap-2 pb-6 ${
+                contactPage && "underline"
+              }`}
             >
               <Image
                 alt="contact"
@@ -72,7 +81,10 @@ export function DropdownMenu({ scrolled }: DropdownMenuProps) {
           </SheetClose>
 
           <SheetClose asChild>
-            <Link href={"/about"} className="flex items-center gap-2">
+            <Link
+              href={"/about"}
+              className={`flex items-center gap-2 ${aboutPage && "underline"}`}
+            >
               <Image
                 alt="info"
                 src={"/icons/info.svg"}
