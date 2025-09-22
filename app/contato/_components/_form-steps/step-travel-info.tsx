@@ -11,24 +11,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { stepInfoSchema } from "@/schemas/step-travel-info";
+import { StepTravelSchema } from "@/schemas/step-travel-info";
 import { useInfoStore } from "@/stores/info-store";
 import { SetStepProps } from "@/types/checkout-steps";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { generateJumpedDataLink } from "@/lib/generate-jumped-link";
-import Link from "next/link";
 
 export function StepTravelInfo({ setStep }: SetStepProps) {
-  const { client, travelInfo, setTravelInfo } = useInfoStore((state) => state);
+  const { travelInfo, setTravelInfo } = useInfoStore((state) => state);
 
-  const link = generateJumpedDataLink({ client });
-
-  const form = useForm<z.infer<typeof stepInfoSchema>>({
-    resolver: zodResolver(stepInfoSchema),
+  const form = useForm<z.infer<typeof StepTravelSchema>>({
+    resolver: zodResolver(StepTravelSchema),
     defaultValues: { ...travelInfo },
   });
 
-  const onSubmit = (values: z.infer<typeof stepInfoSchema>) => {
+  const onSubmit = (values: z.infer<typeof StepTravelSchema>) => {
     setTravelInfo(values);
     setStep("finish");
   };
@@ -36,7 +32,7 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mb-4 flex flex-col max-h-96 overflow-y-scroll gap-4">
+        <div className="mb-4 flex flex-col max-h-96 p-2 overflow-y-scroll gap-4">
           <FormField
             name="accommodationPreference"
             control={form.control}
@@ -200,16 +196,9 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
             Voltar
           </Button>
 
-          <div>
-            <Button type="button" variant={"link"}>
-              <Link href={link} target="_blank" className="size-full">
-                Pular
-              </Link>
-            </Button>
-            <Button type="submit" className="bg-secondary">
-              Finalizar
-            </Button>
-          </div>
+          <Button type="submit" className="bg-secondary">
+            Finalizar
+          </Button>
         </div>
       </form>
     </Form>

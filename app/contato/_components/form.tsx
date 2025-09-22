@@ -1,40 +1,47 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-
 import { Container } from "@/components/shared/container";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Contact, contactSchema } from "@/schemas/contact";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { sendContactEmail } from "@/services/send-contact-email";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { formatCellphone } from "@/lib/format-cellphone";
+import { useState } from "react";
+import { StepsProps } from "@/types/checkout-steps";
+import { StepUser } from "./_form-steps/step-user";
+import { StepDestinationInfo } from "./_form-steps/step-destination-info";
+import { StepTravelInfo } from "./_form-steps/step-travel-info";
+import { StepFinish } from "./_form-steps/step-finish";
+import { Progress } from "@/components/ui/progress";
+
+type StepsElementsProps = {
+  progressBar: number;
+  stepTitle: string;
+  stepField: React.JSX.Element;
+};
 
 export function ContactForm() {
-  const form = useForm<Contact>({
-    resolver: zodResolver(contactSchema),
-  });
+  const [step, setStep] = useState<StepsProps>("user");
 
-  const onSubmit = async (values: Contact) => {
-    try {
-      await sendContactEmail(values);
-      toast.success("Mensagem enviada com sucesso!");
-      form.reset();
-    } catch (error) {
-      console.log(error);
-      toast.error("Erro ao enviar a mensagem. Tente novamente.");
-    }
+  const elements: Record<StepsProps, StepsElementsProps> = {
+    user: {
+      progressBar: 25,
+      stepTitle: "Dados Pessoais",
+      stepField: <StepUser setStep={setStep} />,
+    },
+    destinationInfo: {
+      progressBar: 50,
+      stepTitle: "Informações do destino",
+      stepField: <StepDestinationInfo setStep={setStep} />,
+    },
+    travelInfo: {
+      progressBar: 75,
+      stepTitle: "Informações da viagem",
+      stepField: <StepTravelInfo setStep={setStep} />,
+    },
+    finish: {
+      progressBar: 100,
+      stepTitle: "Envio de dados",
+      stepField: <StepFinish />,
+    },
   };
+
+  const { progressBar, stepTitle, stepField } = elements[step];
 
   return (
     <Container>
@@ -45,98 +52,12 @@ export function ContactForm() {
           possível.
         </p>
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-6"
-          >
-            <div className="flex flex-col items-start md:flex-row gap-6 [&>*]:w-full">
-              <FormField
-                name="name"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel required>Nome</FormLabel>
-                    <FormControl>
-                      <Input
-                        autoFocus
-                        placeholder="Digite seu nome"
-                        {...field}
-                        className="h-10"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        <h2 className="text-center uppercase">{stepTitle}</h2>
+        <div className="py-4">
+          <Progress value={progressBar} />
+        </div>
 
-              <FormField
-                name="phone"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Celular</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="(00) 00000-0000"
-                        value={formatCellphone(String(field.value ?? ""))}
-                        maxLength={15}
-                        className="h-10"
-                        onChange={(e) => {
-                          const rawValue = e.target.value
-                            .replace(/\D/g, "")
-                            .slice(0, 11);
-                          field.onChange(
-                            rawValue === "" ? undefined : rawValue
-                          );
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              name="email"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel required>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Digite seu email"
-                      {...field}
-                      className="h-10"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="message"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel required>Mensagem</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Digite sua mensagem"
-                      className="min-h-32"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button className="h-10 text-lg">Enviar mensagem</Button>
-          </form>
-        </Form>
+        <div className="flex flex-col gap-3">{stepField}</div>
       </div>
     </Container>
   );

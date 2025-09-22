@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,26 +11,23 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { stepInfoSchema } from "@/schemas/step-destination-info";
+import { StepDestinationSchema } from "@/schemas/step-destination-info";
 import { useInfoStore } from "@/stores/info-store";
 import { SetStepProps } from "@/types/checkout-steps";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formateDate } from "@/lib/formateDate";
-import { generateJumpedDataLink } from "@/lib/generate-jumped-link";
 
 export function StepDestinationInfo({ setStep }: SetStepProps) {
-  const { client, destinationInfo, setDestinationInfo } = useInfoStore(
+  const { destinationInfo, setDestinationInfo } = useInfoStore(
     (state) => state
   );
 
-  const link = generateJumpedDataLink({ client });
-
-  const form = useForm<z.infer<typeof stepInfoSchema>>({
-    resolver: zodResolver(stepInfoSchema),
+  const form = useForm<z.infer<typeof StepDestinationSchema>>({
+    resolver: zodResolver(StepDestinationSchema),
     defaultValues: { ...destinationInfo },
   });
 
-  const onSubmit = (values: z.infer<typeof stepInfoSchema>) => {
+  const onSubmit = (values: z.infer<typeof StepDestinationSchema>) => {
     const startDate = new Date(values.startDate);
     const endDate = new Date(values.endDate);
 
@@ -149,17 +145,10 @@ export function StepDestinationInfo({ setStep }: SetStepProps) {
           >
             Voltar
           </Button>
-          <div>
-            <Button type="button" variant={"link"}>
-              <Link href={link} target="_blank" className="size-full">
-                Pular
-              </Link>
-            </Button>
 
-            <Button type="submit" className="bg-secondary">
-              Próximo
-            </Button>
-          </div>
+          <Button type="submit" className="bg-secondary">
+            Próximo
+          </Button>
         </div>
       </form>
     </Form>

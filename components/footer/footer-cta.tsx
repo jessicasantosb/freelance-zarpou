@@ -3,7 +3,7 @@
 import { useInView } from "react-intersection-observer";
 import * as motion from "motion/react-client";
 
-import { ContactButton } from "@/components/shared/contact-button";
+import { WhatsappLink } from "@/components/shared/whatsapp-link";
 import { fromBottomVariants } from "@/lib/animation-variants";
 
 export function FooterCta() {
@@ -25,10 +25,11 @@ export function FooterCta() {
         playsInline
         className="hidden md:block w-full h-[60svh] object-cover"
       />
-      <div className="flex-1 p-4 flex flex-col items-center justify-center bg-primary text-white text-center overflow-hidden">
+      <div className="flex-1 p-4 bg-primary text-white text-center overflow-hidden">
         <motion.div
           animate={inView ? "visible" : "hidden"}
           variants={fromBottomVariants}
+          className="h-full flex flex-col items-center justify-center"
         >
           <h1 className="text-2xl md:text-4xl font-bold">
             O melhor momento para garantir sua próxima viagem é agora
@@ -36,8 +37,8 @@ export function FooterCta() {
           <p className="py-4 text-md md:text-lg">
             Chama a Zarpou no WhatsApp e comece a planejar sem pressa (e sem
             peso no bolso).
-          </p>
-          <ContactButton>Entre em contato conosco</ContactButton>
+          </p>  
+          <WhatsappLink>Entre em contato conosco</WhatsappLink>
         </motion.div>
       </div>
     </div>

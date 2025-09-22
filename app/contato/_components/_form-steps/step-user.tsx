@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { stepUserSchema } from "@/schemas/step-user";
+import { StepUserSchema } from "@/schemas/step-user";
 import { useInfoStore } from "@/stores/info-store";
 import { SetStepProps } from "@/types/checkout-steps";
 import { formatCellphone } from "@/lib/format-cellphone";
@@ -22,15 +22,15 @@ import { formatCellphone } from "@/lib/format-cellphone";
 export function StepUser({ setStep }: SetStepProps) {
   const { client, setClient } = useInfoStore((state) => state);
 
-  const form = useForm<z.infer<typeof stepUserSchema>>({
-    resolver: zodResolver(stepUserSchema),
+  const form = useForm<z.infer<typeof StepUserSchema>>({
+    resolver: zodResolver(StepUserSchema),
     defaultValues: { 
       ...client,
       phone: client.phone || ""
     },
   });
 
-  const onSubmit = ({ name, email, phone }: z.infer<typeof stepUserSchema>) => {
+  const onSubmit = ({ name, email, phone }: z.infer<typeof StepUserSchema>) => {
     setClient({ name, email, phone });
     setStep("destinationInfo");
   };
