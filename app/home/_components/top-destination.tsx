@@ -9,7 +9,7 @@ import { CustomLink } from "@/components/shared/custom-link";
 import { CustomImage } from "@/components/shared/image";
 import { Title } from "@/components/shared/title";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { destinations } from "@/data/destinations";
+import { destinations } from "@/data/home/destinations";
 import { fadeInCardVariants } from "@/lib/animation-variants";
 
 export function TopDestination() {

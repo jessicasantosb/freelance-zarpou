@@ -22,7 +22,7 @@ export function Title({ title, subtitle }: TitleProps) {
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         variants={fadeInTitleVariants}
-        className="relative text-center select-none"
+        className="relative text-center select-none pt-12"
       >
         <h1 className="text-2xl md:text-4xl font-bold">
           <span className="relative inline-block">

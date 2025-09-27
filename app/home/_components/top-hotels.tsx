@@ -16,7 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { hotels } from "@/data/hotels";
+import { hotels } from "@/data/home/hotels";
 import { fadeInCardVariants } from "@/lib/animation-variants";
 
 export function TopHotels() {

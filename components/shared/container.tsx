@@ -5,5 +5,5 @@ export function Container({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <section className="container mx-auto pt-14 px-4">{children}</section>;
+  return <section className="w-full max-w-5xl mx-auto px-2 md:px-0">{children}</section>;
 }

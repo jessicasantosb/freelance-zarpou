@@ -1,10 +1,11 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-export function Logo() {
+export function Logo({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <Link href={"/"}>
-      <div className="relative size-24">
+      <div className={cn("relative size-24", className)} {...props}>
         <Image
           alt="logo"
           src={"/logo/logo.svg"}

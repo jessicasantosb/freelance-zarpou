@@ -1,9 +1,10 @@
+import { Container } from "@/components/shared/container";
 import { services } from "@/data/services";
 import Image from "next/image";
 
 export function Services() {
   return (
-    <div className="pb-8 pt-6 px-8 md:px-12">
+    <Container>
       <h1 className="py-12 text-3xl md:text-5xl text-center text-primary font-bold">
         O que nós oferecemos
       </h1>
@@ -29,6 +30,6 @@ export function Services() {
           </div>
         </div>
       ))}
-    </div>
+    </Container>
   );
 }

@@ -1,21 +1,35 @@
 "use client";
 
-import * as motion from "motion/react-client";
-import { useInView } from "react-intersection-observer";
+import Autoplay from "embla-carousel-autoplay";
+import useEmblaCarousel from "embla-carousel-react";
+import { useRef, useState, useEffect, useCallback } from "react";
 
-import { CardsContainer } from "@/components/shared/cards-container";
 import { Container } from "@/components/shared/container";
 import { CustomImage } from "@/components/shared/image";
 import { Title } from "@/components/shared/title";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { fadeInCardVariants } from "@/lib/animation-variants";
-import { menuItems } from "@/data/menu-items";
+import { menuItems } from "@/data/home/menu-items";
 
 export function Menu() {
-  const { ref, inView } = useInView({
-    threshold: 0.3,
-    triggerOnce: true,
-  });
+  const autoplay = useRef(Autoplay({ delay: 2000, stopOnInteraction: false }));
+  const [emblaRef, embla] = useEmblaCarousel({ loop: true }, [autoplay.current]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!embla) return;
+    setSelectedIndex(embla.selectedScrollSnap());
+  }, [embla]);
+
+  useEffect(() => {
+    if (!embla) return;
+    onSelect();
+    embla.on("select", onSelect);
+  }, [embla, onSelect]);
+
+  const handleMouseEnter = () => autoplay.current?.stop?.();
+  const handleMouseLeave = () => autoplay.current?.play?.();
+
+  const scrollTo = (index: number) => embla?.scrollTo(index);
 
   return (
     <Container>
@@ -24,31 +38,40 @@ export function Menu() {
         subtitle="Organize toda a sua viagem com praticidade e confiança."
       />
 
-      <div ref={ref}>
-        <CardsContainer>
-          {menuItems.map(({ src, text }, index) => (
-            <motion.div
+      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex -ml-1">
+            {menuItems.map(({ src, text }, index) => (
+              <div
+                key={index}
+                className="px-2 pb-8 pt-4 min-w-full md:min-w-auto   md:basis-1/2 lg:basis-1/3 flex-shrink-0"
+              >
+                <Card className="hover:scale-100 shadow-primary hover:border-primary">
+                  <CardHeader className="relative w-full h-52">
+                    <CustomImage alt="city" src={src} rounded="rounded-t-xl" />
+                  </CardHeader>
+                  <CardContent className="h-20 pt-2 md:pt-0">
+                    <CardTitle className="flex items-start justify-center text-center h-full text-xl">
+                      {text}
+                    </CardTitle>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex justify-center mt-4 gap-2">
+          {menuItems.map((_, index) => (
+            <button
               key={index}
-              custom={index}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              variants={fadeInCardVariants}
-              transition={{ delay: index * 0.2 }}
-              className="w-full min-w-[18rem]"
-            >
-              <Card className="hover:scale-100 shadow-primary hover:border-primary">
-                <CardHeader className="relative w-full h-52">
-                  <CustomImage alt="city" src={src} rounded="rounded-t-xl" />
-                </CardHeader>
-                <CardContent className="h-20 pt-2">
-                  <CardTitle className="flex items-start justify-center text-center h-full text-xl">
-                    {text}
-                  </CardTitle>
-                </CardContent>
-              </Card>
-            </motion.div>
+              className={`w-3 h-3 rounded-full transition-colors ${
+                index === selectedIndex ? "bg-primary" : "bg-gray-300"
+              }`}
+              onClick={() => scrollTo(index)}
+            />
           ))}
-        </CardsContainer>
+        </div>
       </div>
     </Container>
   );

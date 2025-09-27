@@ -11,7 +11,7 @@ export function WhatsappLink({
   children: React.ReactNode;
 }>) {
   return (
-    <Link href={whatsappLink} target="_blank" className="flex items-center justify-center gap-2 h-10 w-fit rounded-md px-6 bg-whatsapp text-white shadow-md tracking-wider cursor-pointer text-lg hover:opacity-90">
+    <Link href={whatsappLink} target="_blank" className="flex items-center justify-center gap-2 h-12 w-fit rounded-md px-4 md:px-6 bg-whatsapp text-white shadow-md md:tracking-wider cursor-pointer text-lg hover:opacity-90">
       {children}
       <Image
         alt="whatsapp"

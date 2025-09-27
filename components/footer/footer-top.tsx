@@ -17,32 +17,29 @@ const Icon = ({ icon }: { icon: string }) => {
 
 export function FooterTop() {
   return (
-    <div className="container px-2 pb-8 mx-auto flex flex-col sm:flex-row justify-between gap-4 md:gap-24 items-center md:items-start">
-      <Logo />
+    <div className="px-2 pt-4 pb-8 mx-auto flex flex-col md:flex-row justify-between">
+      <div className="w-full flex items-center justify-center mb-4">
+        <Logo className="size-32" />
+      </div>
 
-      <div className="text-center md:text-left">
+      <div className="w-full flex flex-col items-center justify-between md:gap-2">
         <h4 className="font-bold text-muted-foreground">Formas de Pagamento</h4>
-        <div className="flex flex-col items-center md:flex-row md:items-baseline justify-between md:gap-24">
-          <div className="flex flex-col items-center">
-            <p className="text-muted-foreground">Cartões de Crédito</p>
-            <div className="flex gap-4">
-              <Icon icon="visa" />
-              <Icon icon="mastercard" />
-              <Icon icon="elo" />
-            </div>
-          </div>
 
-          <div className="pt-4 flex flex-col items-center">
-            <p className="text-muted-foreground">Transferências | Débito</p>
-            <div className="flex gap-2">
-              <Icon icon="pix" />
-              <Icon icon="boleto" />
-            </div>
-          </div>
+        <p className="text-muted-foreground">Cartões de Crédito</p>
+        <div className="flex gap-4">
+          <Icon icon="visa" />
+          <Icon icon="mastercard" />
+          <Icon icon="elo" />
+        </div>
+
+        <p className="pt-4 text-muted-foreground">Transferências | Débito</p>
+        <div className="flex gap-2">
+          <Icon icon="pix" />
+          <Icon icon="boleto" />
         </div>
       </div>
 
-      <div className="flex flex-col items-center md:items-start gap-1">
+      <div className="w-full flex flex-col items-center gap-2 pt-6 md:pt-0">
         <h4 className="font-bold text-muted-foreground">Links Úteis</h4>
         <Link
           target="_blank"
@@ -62,11 +59,9 @@ export function FooterTop() {
         >
           Política de Privacidade
         </Link>
-      </div>
 
-      <div className="flex flex-col items-center gap-1">
-        <h4 className="font-bold text-muted-foreground">Redes Socias</h4>
-        <p className="text-muted-foreground">siga a Zarpou</p>
+        <h4 className="pt-4 font-bold text-muted-foreground">Redes Socias</h4>
+        <p className="text-muted-foreground">Siga a Zarpou</p>
         <div className="flex gap-4">
           <Link
             href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}

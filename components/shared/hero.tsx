@@ -32,7 +32,7 @@ export function Hero({children}: {children: ReactNode}) {
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         variants={fromBottomVariants}
-        className="relative z-20 flex flex-col items-center justify-center gap-8 text-center text-white h-full px-4"
+        className="relative z-20 max-w-5xl mx-auto flex flex-col items-center justify-center gap-8 text-center text-white h-full px-4"
       >
         {children}
       </motion.div>
