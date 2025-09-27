@@ -15,12 +15,12 @@ export function FooterCta() {
   return (
     <div
       ref={ref}
-      className="p-6 mb-6 md:rounded-md shadow-md shadow-black/30 flex-1 bg-primary text-white text-center overflow-hidden"
+      className="p-6 mb-6 shadow-md shadow-black/30 flex-1 bg-primary text-white text-center overflow-hidden"
     >
       <motion.div
         animate={inView ? "visible" : "hidden"}
         variants={fromBottomVariants}
-        className="h-full flex flex-col items-center justify-center"
+        className="h-full max-w-5xl mx-auto flex flex-col items-center justify-center"
       >
         <h1 className="text-2xl md:text-4xl font-bold">
           O melhor momento para garantir sua próxima viagem é agora

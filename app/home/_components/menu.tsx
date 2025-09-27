@@ -7,12 +7,19 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { Container } from "@/components/shared/container";
 import { CustomImage } from "@/components/shared/image";
 import { Title } from "@/components/shared/title";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { menuItems } from "@/data/home/menu-items";
 
 export function Menu() {
-  const autoplay = useRef(Autoplay({ delay: 2000, stopOnInteraction: false }));
-  const [emblaRef, embla] = useEmblaCarousel({ loop: true }, [autoplay.current]);
+  const autoplay = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
+  const [emblaRef, embla] = useEmblaCarousel({ loop: true }, [
+    autoplay.current,
+  ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const onSelect = useCallback(() => {
@@ -44,13 +51,13 @@ export function Menu() {
             {menuItems.map(({ src, text }, index) => (
               <div
                 key={index}
-                className="px-2 pb-8 pt-4 min-w-full md:min-w-auto   md:basis-1/2 lg:basis-1/3 flex-shrink-0"
+                className="px-4 md:px-2 pb-8 pt-4 min-w-full md:min-w-auto md:basis-1/2 lg:basis-1/3 flex-shrink-0"
               >
                 <Card className="hover:scale-100 shadow-primary hover:border-primary">
                   <CardHeader className="relative w-full h-52">
                     <CustomImage alt="city" src={src} rounded="rounded-t-xl" />
                   </CardHeader>
-                  <CardContent className="h-20 pt-2 md:pt-0">
+                  <CardContent className="md:h-20 pt-2 md:pt-0">
                     <CardTitle className="flex items-start justify-center text-center h-full text-xl">
                       {text}
                     </CardTitle>

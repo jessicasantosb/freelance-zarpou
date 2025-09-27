@@ -15,7 +15,7 @@ const Icon = ({ icon }: { icon: string }) => {
   );
 };
 
-export function FooterTop() {
+export function FooterLinks() {
   return (
     <div className="px-2 pt-4 pb-8 mx-auto flex flex-col md:flex-row justify-between">
       <div className="w-full flex items-center justify-center mb-4">
@@ -48,7 +48,7 @@ export function FooterTop() {
           }
           className="text-muted-foreground hover:underline"
         >
-          Termos e condições
+          Termos e Condições
         </Link>
         <Link
           target="_blank"

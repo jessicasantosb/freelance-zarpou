@@ -1,14 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { FooterTop } from "./footer-top";
+import { FooterLinks } from "./footer-links";
 import { FooterCta } from "./footer-cta";
 
 export function Footer() {
   return (
-    <footer className="w-full max-w-5xl mx-auto">
+    <footer className="w-full">
         <FooterCta />
-        <FooterTop />
+        <FooterLinks />
 
         <div className="w-full bg-primary md:rounded-t text-white text-[.8rem]">
           <div className="container p-2 mx-auto flex flex-col sm:flex-row items-center md:items-start justify-between gap-4">
