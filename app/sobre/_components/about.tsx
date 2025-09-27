@@ -3,7 +3,7 @@ import { Container } from "@/components/shared/container";
 export function About() {
   return (
     <Container>
-      <h1 className="pt-8 text-3xl md:text-5xl text-center text-primary font-bold">
+      <h1 className="pt-12 text-3xl md:text-5xl text-center text-primary font-bold">
         Sobre a Zarpou Viagens e Turismo
       </h1>
       <div className="pt-6 text-justify leading-8 md:leading-9 text-primary text-xl md:text-2xl [&>*]:pb-4">

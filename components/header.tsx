@@ -42,7 +42,7 @@ export function Header() {
                 aboutPage && "underline"
               }`}
             >
-              Sobre nós
+              Sobre Nós
             </Link>
           </div>
 
