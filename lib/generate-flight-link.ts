@@ -8,7 +8,19 @@ function formatDateISO(date: Date) {
   return date.toISOString().split(".")[0] + ".000Z";
 }
 
-export function generateFlightLink(arrivalIata: string, arrivalName: string, arrivalCity: string) {
+type GenerateFlightLinkProps = {
+  departureFrom: "BHZ" | "SAO" | "CWB";
+  arrivalIata: string;
+  arrivalName: string;
+  arrivalCity: string;
+};
+
+export function generateFlightLink({
+  arrivalCity,
+  arrivalIata,
+  arrivalName,
+  departureFrom,
+}: GenerateFlightLinkProps) {
   const today = new Date();
 
   // Ida = 2 meses depois
@@ -27,11 +39,11 @@ export function generateFlightLink(arrivalIata: string, arrivalName: string, arr
     adultsCount: "1",
     infantCount: "0",
     childCount: "0",
-    departureIata: "SAO",
+    departureIata: departureFrom,
     arrivalIata,
     isDepartureIataCity: "true",
-    departureName: "SAO Todos os aeroportos",
-    departureCity: "SAO",
+    departureName: `${departureFrom} Todos os aeroportos`,
+    departureCity: departureFrom,
     isArrivalIataCity: "false",
     arrivalName,
     arrivalCity,

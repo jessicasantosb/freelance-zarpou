@@ -14,7 +14,7 @@ export const menuItems: MenuItemsProps[] = [
   },
   {
     src: "/home/pacotes.jpg",
-    text: "Pacote de viagem completo",
+    text: "Pacote de viagem",
   },
   {
     src: "/home/ingressos.jpg",
