@@ -46,19 +46,19 @@ export function Menu() {
       />
 
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <div className="overflow-hidden" ref={emblaRef}>
+        <div className="overflow-hidden pt-4" ref={emblaRef}>
           <div className="flex -ml-1">
             {menuItems.map(({ src, text }, index) => (
               <div
                 key={index}
-                className="px-4 md:px-2 pb-8 pt-4 min-w-full md:min-w-auto md:basis-1/2 lg:basis-1/3 flex-shrink-0"
+                className="px-4 md:px-2 pb-2 md:pb-4 pt-4 min-w-full md:min-w-auto md:basis-1/2 lg:basis-1/3 flex-shrink-0"
               >
-                <Card className="hover:scale-100 shadow-primary hover:border-primary">
+                <Card className="hover:scale-100 shadow-primary bg-primary/5 hover:border-primary">
                   <CardHeader className="relative w-full h-52">
                     <CustomImage alt="city" src={src} rounded="rounded-t-xl" />
                   </CardHeader>
-                  <CardContent className="md:h-20 pt-2 md:pt-0">
-                    <CardTitle className="flex items-start justify-center text-center h-full text-xl">
+                  <CardContent className="md:h-11 md:pb-3 pt-2 md:pt-0 text-primary">
+                    <CardTitle className="flex items-center justify-center text-center h-full text-xl">
                       {text}
                     </CardTitle>
                   </CardContent>
@@ -73,7 +73,7 @@ export function Menu() {
             <button
               key={index}
               className={`w-3 h-3 rounded-full transition-colors ${
-                index === selectedIndex ? "bg-primary" : "bg-gray-300"
+                index === selectedIndex ? "bg-primary" : "bg-primary/20"
               }`}
               onClick={() => scrollTo(index)}
             />
