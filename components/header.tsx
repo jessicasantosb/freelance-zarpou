@@ -15,10 +15,10 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 px-8 py-4 transition-all duration-300 ease-in-out select-none
+      className={`fixed top-0 w-full z-50 p-4 transition-all duration-300 ease-in-out select-none
         ${
           scrolled
-            ? "bg-[#f2dfb5] text-primary shadow-md opacity-90"
+            ? "bg-[#f2dfb5] text-primary shadow-md opacity-95"
             : "bg-transparent text-white"
         }
       `}

@@ -22,7 +22,7 @@ export function FooterLinks() {
         <Logo className="size-32" />
       </div>
 
-      <div className="w-full flex flex-col items-center justify-between md:gap-2">
+      <div className="w-full flex flex-col items-center">
         <h4 className="font-bold text-muted-foreground">Formas de Pagamento</h4>
 
         <p className="text-muted-foreground">Cartões de Crédito</p>
@@ -39,7 +39,7 @@ export function FooterLinks() {
         </div>
       </div>
 
-      <div className="w-full flex flex-col items-center gap-2 pt-6 md:pt-0">
+      <div className="w-full flex flex-col items-center pt-6 md:pt-0">
         <h4 className="font-bold text-muted-foreground">Links Úteis</h4>
         <Link
           target="_blank"
@@ -60,9 +60,9 @@ export function FooterLinks() {
           Política de Privacidade
         </Link>
 
-        <h4 className="pt-4 font-bold text-muted-foreground">Redes Socias</h4>
+        <h4 className="pt-6 font-bold text-muted-foreground">Redes Socias</h4>
         <p className="text-muted-foreground">Siga a Zarpou</p>
-        <div className="flex gap-4">
+        <div className="flex gap-4 pt-1">
           <Link
             href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
             target="_blank"
