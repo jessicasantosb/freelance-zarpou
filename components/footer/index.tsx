@@ -13,7 +13,7 @@ export function Footer() {
       <FooterLinks />
 
       <div className="w-full bg-primary md:rounded-t text-white text-[.8rem]">
-        <div className="container p-2 mx-auto flex flex-col sm:flex-row items-center md:items-start justify-between gap-4">
+        <div className="max-w-5xl mx-auto py-2 mx-auto flex flex-col sm:flex-row items-center md:items-start justify-between gap-4">
           <div className="flex flex-col items-center">
             <p className="flex flex-col items-center text-center md:flex-row gap-1 md:gap-4">
               Zarpou Viagens e Turismo. Todos os direitos reservados.
