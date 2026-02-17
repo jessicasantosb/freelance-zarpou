@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
     const validatedData = body;
 
-    const { _, error } = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: "Zarpou Viagens <lazer@zarpouviagens.com.br>",
       to: ["lazer@zarpouviagens.com.br"],
       subject: `Solicitação de Viagem: ${validatedData.name} - ${validatedData.destination}`,
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 
     if (error) return NextResponse.json({ error }, { status: 400 });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, data });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
