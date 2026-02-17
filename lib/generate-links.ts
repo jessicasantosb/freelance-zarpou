@@ -1,5 +1,12 @@
 import { getTravelDates } from "./date-utils";
 
+type GenerateFlightLinkProps = {
+  departureFrom: string;
+  arrivalIata: string;
+  arrivalName: string;
+  arrivalCity: string;
+};
+
 const DEFAULT_GUESTS = {
   adults: "2",
   children: "0",
@@ -37,12 +44,12 @@ export function generateHotelLink(cityName: string, id: string) {
   return `${baseUrl}?${params.toString()}`;
 }
 
-export function generateFlightLink(
-  arrivalIata: string,
-  arrivalName: string,
-  arrivalCity: string,
-  departureFrom: string,
-) {
+export function generateFlightLink({
+  arrivalIata,
+  arrivalName,
+  arrivalCity,
+  departureFrom,
+}: GenerateFlightLinkProps) {
   const { startFormatted, endFormatted } = getTravelDates();
   const baseUrl = "https://app.onertravel.com/zarpouviagens/flight-list";
 
