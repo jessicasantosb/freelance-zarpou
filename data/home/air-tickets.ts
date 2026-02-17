@@ -1,4 +1,4 @@
-import { generateFlightLink } from "@/lib/generate-flight-link";
+import { generateFlightLink } from "@/lib/generate-links";
 import { CardProps } from "@/types/card";
 
 type AirTicketsProps = CardProps & { departure_from: string };

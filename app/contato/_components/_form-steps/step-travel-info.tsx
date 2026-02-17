@@ -15,6 +15,7 @@ import { StepTravelSchema } from "@/schemas/step-travel-info";
 import { useInfoStore } from "@/stores/info-store";
 import { SetStepProps } from "@/types/checkout-steps";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { maskCurrency } from "@/lib/mask-currency";
 
 export function StepTravelInfo({ setStep }: SetStepProps) {
   const { travelInfo, setTravelInfo } = useInfoStore((state) => state);
@@ -128,7 +129,15 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
                   Orçamento estimado para a viagem (por pessoa):
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    {...field}
+                    placeholder="R$ 0,00"
+                    value={field.value}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      field.onChange(maskCurrency(value));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

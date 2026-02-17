@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { StepsProps } from "@/types/checkout-steps";
 import { Progress } from "@/components/ui/progress";
@@ -18,6 +18,16 @@ type StepsElementsProps = {
 
 export function ContactForm() {
   const [step, setStep] = useState<StepsProps>("user");
+  const stepContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (stepContainerRef.current) {
+      stepContainerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [step]);
 
   const elements: Record<StepsProps, StepsElementsProps> = {
     user: {
@@ -53,12 +63,14 @@ export function ContactForm() {
           possível.
         </p>
 
-        <h2 className="text-center uppercase">{stepTitle}</h2>
-        <div className="py-4">
-          <Progress value={progressBar} />
-        </div>
+        <div ref={stepContainerRef} className="scroll-mt-6">
+          <h2 className="text-center uppercase">{stepTitle}</h2>
+          <div className="py-4">
+            <Progress value={progressBar} />
+          </div>
 
-        <div className="flex flex-col gap-3">{stepField}</div>
+          <div className="flex flex-col gap-3">{stepField}</div>
+        </div>
       </div>
     </div>
   );

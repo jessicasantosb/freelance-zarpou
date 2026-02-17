@@ -1,14 +1,18 @@
-import emailjs from "@emailjs/browser";
-
 import { Contact } from "@/schemas/contact";
 
-export const sendContactEmail = (values: Contact) => {
-  return emailjs.send(
-    process.env.NEXT_PUBLIC_SERVICE_ID || "",
-    process.env.NEXT_PUBLIC_TEMPLATE_ID || "",
-    {
-      ...values,
+export const sendContactEmail = async (values: Contact) => {
+  console.log(values);
+  const response = await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    process.env.NEXT_PUBLIC_PUBLIC_KEY || ""
-  );
+    body: JSON.stringify(values),
+  });
+
+  if (!response.ok) {
+    throw new Error("Falha ao enviar e-mail");
+  }
+
+  return response.json();
 };

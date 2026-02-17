@@ -1,21 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 import { Button } from "@/components/ui/button";
 import { useInfoStore } from "@/stores/info-store";
 import { sendContactEmail } from "@/services/send-contact-email";
-import { Contact } from "@/schemas/contact";
-import { useState } from "react";
 
 export function StepFinish() {
-  const [success, setSuccess] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+
   const { client, destinationInfo, travelInfo } = useInfoStore(
-    (state) => state
+    (state) => state,
   );
 
   const onSubmit = async () => {
-    const values: Contact = {
+    setStatus("loading");
+
+    const values = {
       ...client,
       ...destinationInfo,
       ...travelInfo,
@@ -23,14 +25,16 @@ export function StepFinish() {
 
     try {
       await sendContactEmail(values);
-      setSuccess(true);
+      setStatus("success");
+      toast.success("Mensagem enviada com sucesso!");
     } catch (error) {
-      console.log(error);
+      setStatus("idle");
       toast.error("Erro ao enviar a mensagem. Tente novamente.");
     }
-
-    return null;
   };
+
+  const isPending = status === "loading";
+  const isSuccess = status === "success";
 
   return (
     <div className="flex flex-col gap-4 text-center">
@@ -38,8 +42,11 @@ export function StepFinish() {
         Quase lá! <strong>{client.name}</strong>!
       </p>
       <p>Envie seus dados e vamos cuidar de todos os detalhes da sua viagem.</p>
-      <Button onClick={onSubmit} disabled={success}>
-        {success ? "Mensagem enviada com sucesso" : "Enviar"}
+
+      <Button onClick={onSubmit} disabled={isPending || isSuccess}>
+        {isPending && "Enviando..."}
+        {isSuccess && "Mensagem enviada com sucesso"}
+        {!isPending && !isSuccess && "Enviar"}
       </Button>
     </div>
   );
