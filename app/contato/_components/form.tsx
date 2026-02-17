@@ -55,7 +55,10 @@ export function ContactForm() {
   const { progressBar, stepTitle, stepField } = elements[step];
 
   return (
-    <div className="w-full max-w-5xl mx-auto py-12">
+    <div
+      ref={stepContainerRef}
+      className="w-full scroll-mt-6 max-w-5xl mx-auto py-12"
+    >
       <div className="p-6 border border-primary rounded-md text-primary">
         <h3 className="text-3xl md:text-4xl font-bold">Entre em contato</h3>
         <p className="pt-2 pb-6 text-lg md:text-xl text-muted-foreground">
@@ -63,7 +66,7 @@ export function ContactForm() {
           possível.
         </p>
 
-        <div ref={stepContainerRef} className="scroll-mt-6">
+        <div className="">
           <h2 className="text-center uppercase">{stepTitle}</h2>
           <div className="py-4">
             <Progress value={progressBar} />
