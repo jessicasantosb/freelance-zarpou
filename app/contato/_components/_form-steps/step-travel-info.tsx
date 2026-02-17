@@ -27,6 +27,7 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
 
   const onSubmit = (values: z.infer<typeof StepTravelSchema>) => {
     setTravelInfo(values);
+    console.log(values);
     setStep("finish");
   };
 

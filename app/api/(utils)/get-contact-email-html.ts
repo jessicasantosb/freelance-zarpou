@@ -1,4 +1,6 @@
-export const getContactEmailHtml = (data: any) => {
+import { Contact } from "@/schemas/contact";
+
+export const getContactEmailHtml = (data: Contact) => {
   const logoUrl = "https://www.zarpouviagens.com.br/logo/logo.png";
 
   return `

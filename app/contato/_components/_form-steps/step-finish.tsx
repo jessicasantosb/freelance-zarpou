@@ -29,6 +29,7 @@ export function StepFinish() {
       toast.success("Mensagem enviada com sucesso!");
     } catch (error) {
       setStatus("idle");
+      console.error(error);
       toast.error("Erro ao enviar a mensagem. Tente novamente.");
     }
   };
