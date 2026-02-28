@@ -1,11 +1,21 @@
 import { About } from "./_components/about";
 import { Services } from "./_components/services";
 import { Hero } from "@/components/shared/hero";
+import { baseOpenGraph } from "@/constants/seo";
 
-export const metadata = {
-  title: "Sobre nós",
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sobre Nós - Nossa História",
   description:
-    "A Zarpou Viagens é uma agência de viagens de Belo Horizonte focada em roteiros personalizados, suporte confiável e experiências únicas para cada cliente.",
+    "Conheça a história da Zarpou Viagens. Somos uma agência de turismo dedicada a transformar seus sonhos de viagem em roteiros inesquecíveis, com total segurança e transparência.",
+  openGraph: {
+    ...baseOpenGraph,
+    title: "Sobre a Zarpou Viagens",
+    description:
+      "Conheça nossa história. Dedicação total para planejar o seu roteiro perfeito com segurança e transparência.",
+    url: "/sobre",
+  },
 };
 
 export default function AboutPage() {

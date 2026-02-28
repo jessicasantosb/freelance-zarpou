@@ -1,10 +1,20 @@
 import { Hero } from "@/components/shared/hero";
 import { ContactForm } from "./_components/form";
+import { baseOpenGraph } from "@/constants/seo";
 
-export const metadata = {
-  title: "Contato",
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contato - Orçamento e Roteiros Personalizados",
   description:
-    "Fale com a Zarpou Viagens. Uma agência de viagens pronta para ajudar você a montar o roteiro ideal com atendimento ágil e suporte especializado.",
+    "Fale com a Zarpou Viagens. Agência de turismo pronta para ajudar você a montar o roteiro ideal com atendimento ágil, pacotes personalizados e suporte especializado.",
+  openGraph: {
+    ...baseOpenGraph,
+    title: "Fale com a Zarpou Viagens em BH",
+    description:
+      "Agência de turismo pronta para ajudar você a montar o roteiro ideal. Solicite seu orçamento!",
+    url: "/contato",
+  },
 };
 
 export default function ContactPage() {

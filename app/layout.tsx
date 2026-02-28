@@ -6,6 +6,12 @@ import "./globals.css";
 
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import {
+  defaultKeywords,
+  defaultIcons,
+  defaultRobots,
+  baseOpenGraph,
+} from "@/constants/seo";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -14,18 +20,22 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.zarpouviagens.com.br"),
   title: {
     default: "Zarpou Viagens e Turismo",
-    template: "Zarpou | %s",
+    template: "%s | Zarpou Viagens",
   },
   description:
     "Descubra a Zarpou Viagens: agência online com pacotes personalizados, preços justos e uma plataforma segura para planejar sua próxima viagem.",
-  icons: {
-    icon: "/logo/logo-image-light.svg",
-  },
+  metadataBase: new URL("https://www.zarpouviagens.com.br"),
+  keywords: defaultKeywords,
+  icons: defaultIcons,
+  robots: defaultRobots,
   openGraph: {
-    images: [`${process.env.NEXT_PUBLIC_OPENGRAPH_IMG}`],
+    ...baseOpenGraph,
+    title: "Zarpou Viagens e Turismo",
+    description:
+      "Descubra a Zarpou Viagens: agência online com pacotes personalizados, preços justos e uma plataforma segura para planejar sua próxima viagem.",
+    url: "/",
   },
 };
 

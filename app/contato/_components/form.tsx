@@ -19,13 +19,18 @@ type StepsElementsProps = {
 export function ContactForm() {
   const [step, setStep] = useState<StepsProps>("user");
   const stepContainerRef = useRef<HTMLDivElement>(null);
+  const prevStep = useRef<StepsProps>(step);
 
   useEffect(() => {
-    if (stepContainerRef.current) {
-      stepContainerRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+    if (prevStep.current !== step) {
+      prevStep.current = step;
+
+      if (stepContainerRef.current) {
+        stepContainerRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
     }
   }, [step]);
 
