@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
+import { CopyrightIcon } from "lucide-react";
 
 import { FooterLinks } from "./footer-links";
 import { FooterCta } from "./footer-cta";
-import { CopyIcon, CopyrightIcon } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
