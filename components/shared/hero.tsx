@@ -6,7 +6,7 @@ import * as motion from "motion/react-client";
 import { fromBottomVariants } from "@/lib/animation-variants";
 import { ReactNode } from "react";
 
-export function Hero({children}: {children: ReactNode}) {
+export function Hero({ children }: { children: ReactNode }) {
   const { ref, inView } = useInView({
     threshold: 0.5,
     triggerOnce: true,
@@ -15,7 +15,7 @@ export function Hero({children}: {children: ReactNode}) {
   return (
     <div
       ref={ref}
-      className="relative w-full h-[100svh] overflow-hidden select-none"
+      className="relative w-full h-[70svh] overflow-hidden select-none"
     >
       <video
         src="/hero.mp4"
@@ -32,7 +32,7 @@ export function Hero({children}: {children: ReactNode}) {
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         variants={fromBottomVariants}
-        className="relative z-20 max-w-5xl mx-auto flex flex-col items-center justify-center gap-8 text-center text-white h-full px-4"
+        className="relative z-20 max-w-5xl mx-auto flex flex-col items-center justify-center gap-6 text-center text-white h-full px-4"
       >
         {children}
       </motion.div>

@@ -7,6 +7,11 @@ export const formatCellphone = (value: string): string => {
     return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
   return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(
     7,
-    11
+    11,
   )}`;
+};
+
+export const formatWhatsappNumber = (num?: string) => {
+  if (!num) return "";
+  return (num?.replace(/\D/g, "").slice(-9) ?? "").padStart(9, "55");
 };

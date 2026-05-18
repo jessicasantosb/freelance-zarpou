@@ -4,7 +4,10 @@ import Link from "next/link";
 import { DropdownMenu } from "./dropdown-menu";
 import { InlineLogo, InlineLogoLight } from "./shared/logo";
 import { usePathname } from "next/navigation";
+import { PhoneCall } from "lucide-react";
+import VerticalLine from "./shared/vertical-line";
 import { useScrollState } from "@/hooks/useScrollState";
+import { phoneNumber, whatsappLink } from "@/lib/whatsapp-link";
 
 export function Header() {
   const pathname = usePathname();
@@ -29,6 +32,16 @@ export function Header() {
         <div className="flex items-center gap-6">
           <div className="hidden md:flex items-center gap-6">
             <Link
+              href={whatsappLink}
+              target="_blank"
+              className="flex items-center gap-2"
+            >
+              <PhoneCall size={18} /> Televendas {phoneNumber}
+            </Link>
+
+            <VerticalLine />
+
+            <Link
               href="/contato"
               className={`underline-offset-2 hover:underline hover:opacity-90 ${
                 contactPage && "underline"
@@ -36,6 +49,9 @@ export function Header() {
             >
               Contato
             </Link>
+
+            <VerticalLine />
+
             <Link
               href="/sobre"
               className={`underline-offset-2 hover:underline hover:opacity-90 ${

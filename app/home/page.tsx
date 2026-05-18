@@ -4,21 +4,26 @@ import { TopDestination } from "./_components/top-destination";
 import { TopHotels } from "./_components/top-hotels";
 import { TopAirTicket } from "./_components/top-air-ticket";
 import { WhatsappLink } from "@/components/shared/whatsapp-link";
+import { BookingWidget } from "./_components/widget/booking-widget";
 
 export default function HomePage() {
   return (
     <main>
       <Hero>
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-14 md:leading-20">
-          Seu <span className="text-secondary">sonho</span> de viajar bem, agora
-          é realidade
+        <h1 className="text-2xl md:text-5xl font-bold -mb-3 tracking-tight">
+          Seu <span className="text-secondary">sonho</span> de viajar bem,
         </h1>
-        <p className="text-xl md:text-2xl">
+        <h1 className="text-2xl md:text-5xl font-bold tracking-tight">
+          agora é realidade
+        </h1>
+        <p className="text-lg md:text-xl">
           Pacotes nacionais e internacionais com condições especiais,
           planejamentos seguro e atendimento personalizado.
         </p>
         <WhatsappLink>Entre em contato conosco</WhatsappLink>
       </Hero>
+
+      <BookingWidget />
 
       <Menu />
       <TopDestination />
