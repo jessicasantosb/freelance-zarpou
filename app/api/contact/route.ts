@@ -3,10 +3,15 @@ import { Resend } from "resend";
 
 import { getContactEmailHtml } from "../(utils)/get-contact-email-html";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: Request) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.warn("RESEND_API_KEY não configurada.");
+      return NextResponse.json({ success: true, message: "Modo simulação de e-mail ativo." });
+    }
+
+    const resend = new Resend(apiKey);
     const body = await req.json();
 
     const validatedData = body;

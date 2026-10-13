@@ -31,6 +31,7 @@ type Actions = {
   setClient: (name: States["client"]) => void;
   setDestinationInfo: (info: States["destinationInfo"]) => void;
   setTravelInfo: (info: States["travelInfo"]) => void;
+  resetInfo: () => void;
 };
 
 const initialState: States = {
@@ -66,4 +67,5 @@ export const useInfoStore = create<States & Actions>()((set) => ({
   setDestinationInfo: (destinationInfo) =>
     set((state) => ({ ...state, destinationInfo })),
   setTravelInfo: (travelInfo) => set((state) => ({ ...state, travelInfo })),
+  resetInfo: () => set(initialState),
 }));

@@ -5,9 +5,37 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.pexels.com",
+        hostname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
       },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/hoteis",
+        destination: "/hospedagens",
+        permanent: true,
+      },
+      {
+        source: "/hoteis/:path*",
+        destination: "/hospedagens/:path*",
+        permanent: true,
+      },
+      {
+        source: "/voos",
+        destination: "/passagens",
+        permanent: true,
+      },
+      {
+        source: "/voos/:path*",
+        destination: "/passagens/:path*",
+        permanent: true,
+      },
+    ];
   },
 };
 

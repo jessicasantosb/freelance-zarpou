@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+import { Suspense } from "react";
 import "./globals.css";
 
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { AiConciergeChat } from "@/components/chat/ai-concierge-chat";
+import { NavigationProgressBar } from "@/components/shared/navigation-progress-bar";
+import { ConfirmDialogProvider } from "@/components/shared/confirm-dialog-provider";
 import {
   defaultKeywords,
   defaultIcons,
@@ -47,10 +52,16 @@ export default function RootLayout({
   return (
     <html lang="pt-br" data-scroll="0" className="group">
       <body className={`${poppins.variable} antialiased`}>
-        <ToastContainer position="bottom-center" />
-        <Header />
-        {children}
-        <Footer />
+        <ConfirmDialogProvider>
+          <Suspense fallback={null}>
+            <NavigationProgressBar />
+          </Suspense>
+          <ToastContainer position="bottom-center" />
+          <Header />
+          {children}
+          <Footer />
+          <AiConciergeChat />
+        </ConfirmDialogProvider>
       </body>
     </html>
   );

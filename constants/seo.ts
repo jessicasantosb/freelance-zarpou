@@ -20,6 +20,7 @@ export const defaultKeywords = [
   "agência de viagens sabará",
   "agência de viagens lagoa santa",
   "agência de viagens pedro leopoldo",
+  "agência de viagens itatiaiuçu",
 ];
 
 export const defaultIcons = {

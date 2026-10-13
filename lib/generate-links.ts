@@ -1,73 +1,33 @@
-import { getTravelDates } from "./date-utils";
-
 type GenerateFlightLinkProps = {
   departureFrom: string;
   arrivalIata: string;
-  arrivalName: string;
-  arrivalCity: string;
+  arrivalName?: string;
+  arrivalCity?: string;
 };
 
-const DEFAULT_GUESTS = {
-  adults: "2",
-  children: "0",
-  infants: "0",
-};
-
-const HOTEL_ROOM_CONFIG = [
-  {
-    numberOfAdults: 2,
-    numberOfInfant: 0,
-    numberOfChilds: 0,
-    agesOfChild: [],
-    roomNum: 0,
-  },
-];
-
-export function generateHotelLink(cityName: string, id: string) {
-  const { startFormatted, endFormatted } = getTravelDates();
-  const baseUrl = "https://app.onertravel.com/zarpouviagens/hotel-list";
-
+export function generateHotelLink(cityName: string, id?: string) {
+  if (id && id.startsWith("hotel-")) {
+    return `/hospedagens/${id}`;
+  }
   const params = new URLSearchParams({
-    rooms: JSON.stringify(HOTEL_ROOM_CONFIG),
-    numberOfAdults: DEFAULT_GUESTS.adults,
-    numberOfChild: DEFAULT_GUESTS.children,
-    numberOfInfant: DEFAULT_GUESTS.infants,
-    numberOfRooms: "1",
-    cityName,
-    id,
-    type: "1",
-    startDate: startFormatted,
-    endDate: endFormatted,
-    source: "h",
+    city: cityName,
+    checkIn: "2026-11-20",
+    checkOut: "2026-11-23",
+    adults: "2",
   });
-
-  return `${baseUrl}?${params.toString()}`;
+  return `/hospedagens?${params.toString()}`;
 }
 
 export function generateFlightLink({
-  arrivalIata,
-  arrivalName,
-  arrivalCity,
   departureFrom,
+  arrivalIata,
 }: GenerateFlightLinkProps) {
-  const { startFormatted, endFormatted } = getTravelDates();
-  const baseUrl = "https://app.onertravel.com/zarpouviagens/flight-list";
-
   const params = new URLSearchParams({
-    departureDate: `${startFormatted}T00:00:00.000Z`,
-    returnDate: `${endFormatted}T00:00:00.000Z`,
-    isRoundTrip: "true",
-    adultsCount: DEFAULT_GUESTS.adults,
-    infantCount: DEFAULT_GUESTS.infants,
-    childCount: DEFAULT_GUESTS.children,
-    departureIata: departureFrom,
-    arrivalIata,
-    departureName: `${departureFrom} Todos os aeroportos`,
-    departureCity: departureFrom,
-    arrivalName,
-    arrivalCity,
-    source: "f",
+    from: departureFrom,
+    to: arrivalIata,
+    departureDate: "2026-11-20",
+    returnDate: "2026-11-27",
+    adults: "2",
   });
-
-  return `${baseUrl}?${params.toString()}`;
+  return `/passagens?${params.toString()}`;
 }

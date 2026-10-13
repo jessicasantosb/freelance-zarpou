@@ -89,9 +89,15 @@ export function StepUser({ setStep }: SetStepProps) {
           )}
         />
 
-        <Button type="submit" variant={"outline"}>
-          Próximo
-        </Button>
+        <div className="pt-2">
+          <Button
+            type="submit"
+            className="w-full h-12 bg-primary hover:bg-[#084574] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition shadow-md hover:shadow-lg text-sm cursor-pointer"
+          >
+            <span>Avançar para Destino</span>
+            <span className="text-secondary font-bold">→</span>
+          </Button>
+        </div>
       </form>
     </Form>
   );

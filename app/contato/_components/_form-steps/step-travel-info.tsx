@@ -34,7 +34,7 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mb-4 flex flex-col max-h-96 p-2 overflow-y-scroll gap-4">
+        <div className="mb-4 flex flex-col max-h-[420px] p-1 overflow-y-auto gap-4">
           <FormField
             name="accommodationPreference"
             control={form.control}
@@ -197,17 +197,22 @@ export function StepTravelInfo({ setStep }: SetStepProps) {
           />
         </div>
 
-        <div className="mt-4 flex justify-between gap-2">
+        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
           <Button
             type="button"
-            variant={"link"}
+            variant="outline"
             onClick={() => setStep("destinationInfo")}
+            className="h-11 px-5 rounded-xl border-slate-200 text-slate-700 hover:bg-slate-100 font-semibold text-xs cursor-pointer"
           >
-            Voltar
+            ← Voltar
           </Button>
 
-          <Button type="submit" className="bg-secondary">
-            Finalizar
+          <Button
+            type="submit"
+            className="h-11 px-6 rounded-xl bg-primary hover:bg-[#084574] text-white font-bold text-xs flex items-center gap-2 cursor-pointer shadow-md"
+          >
+            <span>Revisar Solicitação</span>
+            <span className="text-secondary font-bold">→</span>
           </Button>
         </div>
       </form>
