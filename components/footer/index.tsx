@@ -56,41 +56,28 @@ export function Footer() {
                 </p>
               </div>
 
-              {/* LINKS LEGAIS & DESENVOLVEDOR */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-xs">
-                <div className="flex items-center gap-4 text-slate-400">
-                  <Link
-                    href="/termos"
-                    className="hover:text-secondary transition underline underline-offset-4"
-                  >
-                    Termos de Uso
-                  </Link>
-                  <span>•</span>
-                  <Link
-                    href="/privacidade"
-                    className="hover:text-secondary transition underline underline-offset-4"
-                  >
-                    Privacidade (LGPD)
-                  </Link>
-                  <span>•</span>
-                  <Link
-                    href="/minhas-viagens"
-                    className="hover:text-secondary transition underline underline-offset-4"
-                  >
-                    Minhas Viagens
-                  </Link>
-                </div>
-
-                <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium border-t sm:border-t-0 sm:border-l border-slate-800 pt-2 sm:pt-0 sm:pl-4">
-                  <span>Desenvolvido por</span>
-                  <Link
-                    href={process.env.NEXT_PUBLIC_PORTFOLIO_LINK || "#"}
-                    target="_blank"
-                    className="text-secondary font-bold hover:underline"
-                  >
-                    Jéssica
-                  </Link>
-                </div>
+              {/* LINKS LEGAIS */}
+              <div className="flex items-center gap-4 text-xs text-slate-400">
+                <Link
+                  href="/termos"
+                  className="hover:text-secondary transition underline underline-offset-4"
+                >
+                  Termos de Uso
+                </Link>
+                <span>•</span>
+                <Link
+                  href="/privacidade"
+                  className="hover:text-secondary transition underline underline-offset-4"
+                >
+                  Privacidade (LGPD)
+                </Link>
+                <span>•</span>
+                <Link
+                  href="/minhas-viagens"
+                  className="hover:text-secondary transition underline underline-offset-4"
+                >
+                  Minhas Viagens
+                </Link>
               </div>
             </div>
           </Container>

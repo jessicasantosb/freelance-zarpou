@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState, useMemo } from "react";
+import { Suspense, useEffect, useState, useMemo, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,9 +67,86 @@ function DestinosContent() {
     }
   }, [selectedCityParam]);
 
-  // Filtragem de destinos
+  // Gera pacotes dinâmicos para um destino específico APENAS se houver hotel e voo reais no catálogo
+  const getPackagesForDestination = useCallback((dest: DestinationItem): CityPackageItem[] => {
+    if (!hotels.length || !flights.length) return [];
+
+    const destName = dest.title.toLowerCase().trim();
+
+    // Procura hotel REAL que pertença à cidade do destino
+    const matchedHotel = hotels.find((h) => {
+      const city = h.city.toLowerCase().trim();
+      return city === destName || city.includes(destName) || destName.includes(city);
+    });
+
+    // Procura voo REAL cujo destino seja a cidade do destino
+    const matchedFlight = flights.find((f) => {
+      const destCity = f.outbound?.destinationCity?.toLowerCase().trim() || "";
+      return destCity === destName || destCity.includes(destName) || destName.includes(destCity);
+    });
+
+    // Se NÃO houver hotel E voo reais cadastrados para este destino, NÃO gera pacotes!
+    if (!matchedHotel || !matchedFlight) {
+      return [];
+    }
+
+    const hotelNightPrice = matchedHotel.basePricePerNight || 0;
+    const flightPrice = matchedFlight.price || 0;
+
+    const basePkgPrice4Nights = Math.round(flightPrice + (hotelNightPrice * 4 * 0.85));
+    const originalPkgPrice4Nights = Math.round(flightPrice + (hotelNightPrice * 4));
+    const discount4 = Math.round(((originalPkgPrice4Nights - basePkgPrice4Nights) / originalPkgPrice4Nights) * 100);
+
+    const basePkgPrice6Nights = Math.round(flightPrice + (hotelNightPrice * 6 * 0.80));
+    const originalPkgPrice6Nights = Math.round(flightPrice + (hotelNightPrice * 6));
+    const discount6 = Math.round(((originalPkgPrice6Nights - basePkgPrice6Nights) / originalPkgPrice6Nights) * 100);
+
+    return [
+      {
+        id: `pkg-${dest.id}-standard`,
+        title: `Pacote Completo: ${dest.title} Essencial`,
+        nights: 4,
+        hotel: matchedHotel,
+        flight: matchedFlight,
+        price: basePkgPrice4Nights,
+        originalPrice: originalPkgPrice4Nights,
+        discountPercent: discount4 > 0 ? discount4 : 15,
+        installments: 12,
+        highlights: [
+          `Passagem Aérea ${matchedFlight.outbound?.airline || "inclusa"} (Ida e Volta)`,
+          `Hospedagem no ${matchedHotel.name} (4 diárias)`,
+          "Café da manhã incluso",
+          "Assistência Zarpou 24h durante toda a estadia",
+        ],
+      },
+      {
+        id: `pkg-${dest.id}-premium`,
+        title: `Experiência Premium: ${dest.title} dos Sonhos`,
+        nights: 6,
+        hotel: matchedHotel,
+        flight: matchedFlight,
+        price: basePkgPrice6Nights,
+        originalPrice: originalPkgPrice6Nights,
+        discountPercent: discount6 > 0 ? discount6 : 20,
+        installments: 12,
+        highlights: [
+          `Passagem Aérea ${matchedFlight.outbound?.airline || "inclusa"} com bagagem`,
+          `Hospedagem no ${matchedHotel.name} (6 diárias)`,
+          "Café da manhã e benefícios exclusivos",
+          "Transfer e assistência Zarpou 24h",
+        ],
+      },
+    ];
+  }, [hotels, flights]);
+
+  // Cidades que realmente possuem pacotes disponíveis (com voo e hotel no catálogo)
+  const destinationsWithPackages = useMemo(() => {
+    return destinations.filter((dest) => getPackagesForDestination(dest).length > 0);
+  }, [destinations, getPackagesForDestination]);
+
+  // Filtragem de destinos: só exibe destinos que possuem pacotes reais disponíveis
   const filteredDestinations = useMemo(() => {
-    return destinations.filter((dest) => {
+    return destinationsWithPackages.filter((dest) => {
       const matchesCategory =
         activeCategory === "all" || dest.category === activeCategory;
       const matchesCity =
@@ -83,67 +160,7 @@ function DestinosContent() {
 
       return matchesCategory && matchesCity && matchesSearch;
     });
-  }, [destinations, activeCategory, selectedCityFilter, searchQuery]);
-
-  // Gera pacotes dinâmicos para um destino específico
-  const getPackagesForDestination = (dest: DestinationItem): CityPackageItem[] => {
-    const matchedHotel =
-      hotels.length > 0
-        ? hotels.find((h) =>
-            h.city.toLowerCase().includes(dest.title.toLowerCase()) ||
-            dest.title.toLowerCase().includes(h.city.toLowerCase())
-          ) || hotels[0]
-        : undefined;
-
-    const matchedFlight =
-      flights.length > 0
-        ? flights.find((f) =>
-            f.outbound?.destinationCity?.toLowerCase().includes(dest.title.toLowerCase()) ||
-            dest.title.toLowerCase().includes(f.outbound?.destinationCity?.toLowerCase())
-          ) || flights[0]
-        : undefined;
-
-    const basePkgPrice = Math.round((dest.startingPrice || 600) * 2.1);
-    const originalPkgPrice = Math.round(basePkgPrice * 1.3);
-    const discount = Math.round(((originalPkgPrice - basePkgPrice) / originalPkgPrice) * 100);
-
-    return [
-      {
-        id: `pkg-${dest.id}-standard`,
-        title: `Pacote Completo: ${dest.title} Essencial`,
-        nights: 4,
-        hotel: matchedHotel,
-        flight: matchedFlight,
-        price: basePkgPrice,
-        originalPrice: originalPkgPrice,
-        discountPercent: discount,
-        installments: 12,
-        highlights: [
-          "Passagens Aéreas de Ida e Volta inclusas",
-          `Hospedagem com Café da Manhã (${matchedHotel?.name || "Hotel Selecionado"})`,
-          "Cancelamento Flexível sem custos adicionais",
-          "Assistência Zarpou 24h durante toda a estadia",
-        ],
-      },
-      {
-        id: `pkg-${dest.id}-premium`,
-        title: `Experiência Premium: ${dest.title} dos Sonhos`,
-        nights: 6,
-        hotel: matchedHotel,
-        flight: matchedFlight,
-        price: Math.round(basePkgPrice * 1.45),
-        originalPrice: Math.round(originalPkgPrice * 1.5),
-        discountPercent: discount + 5,
-        installments: 12,
-        highlights: [
-          "Passagens Aéreas com bagagem despachada inclusa",
-          "Acomodação superior com vista privilegiada",
-          "Transfer privativo de chegada e partida",
-          "Roteiro exclusivo com dicas de especialistas locais",
-        ],
-      },
-    ];
-  };
+  }, [destinationsWithPackages, activeCategory, selectedCityFilter, searchQuery]);
 
   const handleBookPackage = (pkg: CityPackageItem) => {
     if (pkg.hotel) {
@@ -271,48 +288,50 @@ function DestinosContent() {
             </div>
           </div>
 
-          {/* CHIPS DE CIDADES CADASTRADAS */}
-          <div className="pt-4 border-t border-slate-100">
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1">
-                Filtrar Cidade:
-              </span>
-              <button
-                type="button"
-                onClick={() => setSelectedCityFilter("")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer shrink-0 ${
-                  !selectedCityFilter
-                    ? "bg-secondary text-primary shadow-xs"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }`}
-              >
-                Todas as Cidades ({destinations.length})
-              </button>
+          {/* CHIPS DE CIDADES CADASTRADAS COM PACOTES */}
+          {destinationsWithPackages.length > 0 && (
+            <div className="pt-4 border-t border-slate-100">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1">
+                  Filtrar Cidade:
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setSelectedCityFilter("")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer shrink-0 ${
+                    !selectedCityFilter
+                      ? "bg-secondary text-primary shadow-xs"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  Todas as Cidades ({destinationsWithPackages.length})
+                </button>
 
-              {destinations.map((dest) => {
-                const isSelected =
-                  selectedCityFilter.toLowerCase() === dest.title.toLowerCase();
+                {destinationsWithPackages.map((dest) => {
+                  const isSelected =
+                    selectedCityFilter.toLowerCase() === dest.title.toLowerCase();
 
-                return (
-                  <button
-                    key={dest.id}
-                    type="button"
-                    onClick={() =>
-                      setSelectedCityFilter(isSelected ? "" : dest.title)
-                    }
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shrink-0 ${
-                      isSelected
-                        ? "bg-secondary text-primary shadow-xs"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                    }`}
-                  >
-                    <span>{dest.flag}</span>
-                    <span>{dest.title}</span>
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={dest.id}
+                      type="button"
+                      onClick={() =>
+                        setSelectedCityFilter(isSelected ? "" : dest.title)
+                      }
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                        isSelected
+                          ? "bg-secondary text-primary shadow-xs"
+                          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      }`}
+                    >
+                      <span>{dest.flag}</span>
+                      <span>{dest.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* LISTAGEM DE CIDADES E SEUS PACOTES */}
@@ -322,22 +341,28 @@ function DestinosContent() {
               <MapPin className="size-8" />
             </div>
             <h3 className="text-xl font-bold text-slate-900">
-              Nenhum destino encontrado
+              {destinationsWithPackages.length === 0
+                ? "Nenhum pacote disponível"
+                : "Nenhum destino encontrado"}
             </h3>
             <p className="text-xs text-slate-500 leading-relaxed">
-              Tente selecionar outra categoria ou limpe o campo de busca para visualizar todas as opções disponíveis.
+              {destinationsWithPackages.length === 0
+                ? "Ainda não há pacotes de viagem com voos e hospedagens combinados no catálogo. Novos pacotes serão exibidos assim que os itens forem cadastrados."
+                : "Tente selecionar outra categoria ou limpe o campo de busca para visualizar todas as opções disponíveis."}
             </p>
-            <button
-              type="button"
-              onClick={() => {
-                setActiveCategory("all");
-                setSelectedCityFilter("");
-                setSearchQuery("");
-              }}
-              className="px-5 py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary/90 transition cursor-pointer"
-            >
-              Ver Todas as Cidades
-            </button>
+            {destinationsWithPackages.length > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveCategory("all");
+                  setSelectedCityFilter("");
+                  setSearchQuery("");
+                }}
+                className="px-5 py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary/90 transition cursor-pointer"
+              >
+                Ver Todas as Cidades
+              </button>
+            )}
           </div>
         ) : (
           <div className="space-y-14">

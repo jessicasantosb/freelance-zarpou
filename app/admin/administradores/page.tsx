@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import {
   ShieldCheck,
   UserCheck,
@@ -24,23 +23,12 @@ import {
   Layers,
   Eye,
   EyeOff,
-  Smartphone,
-  Check,
-  Copy,
-  Loader2,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/auth-store";
 import { useAdminUsersStore } from "@/stores/admin-users-store";
 import { AdminUser, AdminRole, AVAILABLE_ADMIN_SCREENS } from "@/types/user";
 import { toast } from "react-toastify";
 import { useConfirm } from "@/components/shared/confirm-dialog-provider";
-import {
-  generateBase32Secret,
-  generateOtpauthUri,
-  generateQrCodeDataUrl,
-  generateBackupCodes,
-  verifyTotpCode,
-} from "@/lib/two-factor";
 
 export default function AdministradoresAdminPage() {
   const router = useRouter();
@@ -75,14 +63,6 @@ export default function AdministradoresAdminPage() {
   const [formActive, setFormActive] = useState(true);
   const [formTwoFactorEnabled, setFormTwoFactorEnabled] = useState(false);
   const [formTwoFactorMethod, setFormTwoFactorMethod] = useState<"email" | "authenticator" | "both">("email");
-  const [formTwoFactorSecret, setFormTwoFactorSecret] = useState("");
-  const [formTwoFactorQrUrl, setFormTwoFactorQrUrl] = useState("");
-  const [formBackupCodes, setFormBackupCodes] = useState<string[]>([]);
-  const [formOtpCode, setFormOtpCode] = useState("");
-  const [isTotpVerified, setIsTotpVerified] = useState(false);
-  const [isVerifyingTotp, setIsVerifyingTotp] = useState(false);
-  const [copiedSecret, setCopiedSecret] = useState(false);
-  const [copiedBackups, setCopiedBackups] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validatePassword = (pass: string): { valid: boolean; errors: string[] } => {
@@ -174,14 +154,6 @@ export default function AdministradoresAdminPage() {
     setFormActive(true);
     setFormTwoFactorEnabled(false);
     setFormTwoFactorMethod("email");
-    const newSecret = generateBase32Secret(16);
-    const newBackups = generateBackupCodes(5);
-    setFormTwoFactorSecret(newSecret);
-    setFormBackupCodes(newBackups);
-    setFormOtpCode("");
-    setIsTotpVerified(false);
-    setCopiedSecret(false);
-    setCopiedBackups(false);
     setIsModalOpen(true);
   };
 
@@ -211,61 +183,7 @@ export default function AdministradoresAdminPage() {
     setFormActive(admin.isActive);
     setFormTwoFactorEnabled(Boolean(admin.twoFactorEnabled));
     setFormTwoFactorMethod(admin.twoFactorMethod || "email");
-    const secret = admin.twoFactorSecret || generateBase32Secret(16);
-    const backups =
-      admin.backupCodes && admin.backupCodes.length > 0 ? admin.backupCodes : generateBackupCodes(5);
-    setFormTwoFactorSecret(secret);
-    setFormBackupCodes(backups);
-    setFormOtpCode("");
-    setIsTotpVerified(Boolean(admin.twoFactorEnabled && admin.twoFactorMethod === "authenticator" && admin.twoFactorSecret));
-    setCopiedSecret(false);
-    setCopiedBackups(false);
     setIsModalOpen(true);
-  };
-
-  useEffect(() => {
-    if (isModalOpen && formTwoFactorMethod === "authenticator" && formTwoFactorSecret) {
-      const email = formEmail.trim() || "admin@zarpou.com.br";
-      const uri = generateOtpauthUri(email, formTwoFactorSecret, "Zarpou Admin");
-      generateQrCodeDataUrl(uri).then(setFormTwoFactorQrUrl);
-    }
-  }, [isModalOpen, formTwoFactorMethod, formTwoFactorSecret, formEmail]);
-
-  const handleGenerateNewModalSecret = () => {
-    const newSecret = generateBase32Secret(16);
-    setFormTwoFactorSecret(newSecret);
-    const newBackups = generateBackupCodes(5);
-    setFormBackupCodes(newBackups);
-    setFormOtpCode("");
-    setIsTotpVerified(false);
-    const email = formEmail.trim() || "admin@zarpou.com.br";
-    const uri = generateOtpauthUri(email, newSecret, "Zarpou Admin");
-    generateQrCodeDataUrl(uri).then(setFormTwoFactorQrUrl);
-    toast.info("Novo QR Code gerado para pareamento!");
-  };
-
-  const handleVerifyModalOtp = async () => {
-    const cleanCode = formOtpCode.trim().replace(/\D/g, "");
-    if (cleanCode.length !== 6) {
-      toast.warning("Por favor, digite o código de 6 dígitos gerado pelo app autenticador.");
-      return;
-    }
-
-    setIsVerifyingTotp(true);
-    try {
-      const isValid = await verifyTotpCode(formTwoFactorSecret, cleanCode);
-      if (isValid) {
-        setIsTotpVerified(true);
-        toast.success("Código validado com sucesso! O aplicativo autenticador está pareado.");
-      } else {
-        setIsTotpVerified(false);
-        toast.error("Código incorreto ou expirado. Verifique os 6 dígitos gerados no aplicativo.");
-      }
-    } catch {
-      toast.error("Erro ao validar código OTP.");
-    } finally {
-      setIsVerifyingTotp(false);
-    }
   };
 
   const handleToggleStatus = async (admin: AdminUser) => {
@@ -354,20 +272,10 @@ export default function AdministradoresAdminPage() {
       return;
     }
 
-    // Validação de 2FA por Autenticador
-    if (formTwoFactorEnabled && formTwoFactorMethod === "authenticator" && !isTotpVerified) {
-      toast.error("Por favor, digite e confirme o código de 6 dígitos gerado pelo app autenticador para validar o pareamento antes de salvar.");
-      return;
-    }
-
     const assignedRole: AdminRole = isGeneralAdmin ? "admin" : "personalizado";
     const assignedScreens = isGeneralAdmin
       ? AVAILABLE_ADMIN_SCREENS.map((s) => s.id)
       : formAllowedScreens;
-
-    const twoFactorSecretToSave =
-      formTwoFactorEnabled && formTwoFactorMethod === "authenticator" ? formTwoFactorSecret : undefined;
-    const backupCodesToSave = formTwoFactorEnabled ? formBackupCodes : undefined;
 
     setIsSubmitting(true);
     try {
@@ -381,8 +289,8 @@ export default function AdministradoresAdminPage() {
           isActive: isSelf(editingAdmin) ? true : formActive,
           twoFactorEnabled: formTwoFactorEnabled,
           twoFactorMethod: formTwoFactorMethod,
-          twoFactorSecret: twoFactorSecretToSave,
-          backupCodes: backupCodesToSave,
+          twoFactorSecret: formTwoFactorEnabled ? editingAdmin.twoFactorSecret : undefined,
+          backupCodes: formTwoFactorEnabled ? editingAdmin.backupCodes : undefined,
         });
 
         if (result.success) {
@@ -399,10 +307,8 @@ export default function AdministradoresAdminPage() {
           role: assignedRole,
           allowedScreens: assignedScreens,
           isActive: formActive,
-          twoFactorEnabled: formTwoFactorEnabled,
-          twoFactorMethod: formTwoFactorMethod,
-          twoFactorSecret: twoFactorSecretToSave,
-          backupCodes: backupCodesToSave,
+          twoFactorEnabled: false,
+          twoFactorMethod: "email",
         });
 
         if (result.success) {
@@ -1236,251 +1142,77 @@ export default function AdministradoresAdminPage() {
               </div>
 
               {/* AUTENTICAÇÃO EM 2 FATORES (2FA) */}
-              <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/60 space-y-3">
-                <div className="flex items-start justify-between gap-3">
+              {!editingAdmin ? (
+                <div className="p-4 rounded-2xl border border-amber-200/90 bg-amber-50/80 space-y-2">
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-primary/10 text-primary mt-0.5">
-                      <ShieldCheck className="size-5" />
+                    <div className="p-2 rounded-xl bg-amber-500/10 text-amber-700 mt-0.5 shrink-0 border border-amber-200/60">
+                      <ShieldCheck className="size-5 text-amber-600" />
                     </div>
-                    <div>
+                    <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <label
-                          htmlFor="formTwoFactorEnabled"
-                          className="text-xs font-bold text-slate-800 cursor-pointer"
-                        >
-                          Autenticação em 2 Fatores (2FA)
-                        </label>
-                        <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                            formTwoFactorEnabled
-                              ? "text-emerald-700 bg-emerald-100/70 border-emerald-300"
-                              : "text-slate-500 bg-slate-100 border-slate-200"
-                          }`}
-                        >
-                          {formTwoFactorEnabled ? "Ativado" : "Desativado"}
+                        <h4 className="text-xs font-bold text-slate-800">
+                          Verificação em Duas Etapas (2FA)
+                        </h4>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border border-slate-200 bg-white text-slate-500">
+                          Inicia Desativado
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-500 mt-0.5">
-                        Exige validação adicional de segurança a cada novo login deste usuário no painel administrativo.
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        A verificação em duas etapas é criada como desativada para garantir o primeiro acesso do usuário. <strong>É muito importante orientar o novo administrador a ativar a proteção</strong> (via E-mail ou Aplicativo Autenticador TOTP) logo após seu primeiro login, através do menu de perfil no topo da tela.
                       </p>
                     </div>
                   </div>
-
-                  <label className="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
-                    <input
-                      type="checkbox"
-                      id="formTwoFactorEnabled"
-                      checked={formTwoFactorEnabled}
-                      onChange={(e) => setFormTwoFactorEnabled(e.target.checked)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary cursor-pointer"></div>
-                  </label>
                 </div>
-
-                {formTwoFactorEnabled && (
-                  <div className="pt-2 border-t border-slate-200/80">
-                    <label className="text-[11px] font-bold text-slate-700 block mb-1.5">
-                      Método de Verificação Preferencial:
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <label
-                        className={`flex items-center gap-2.5 p-2.5 rounded-lg border text-xs cursor-pointer transition ${
-                          formTwoFactorMethod === "email"
-                            ? "border-primary bg-primary/5 text-primary font-bold shadow-xs"
-                            : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 font-medium"
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="form2FAMethod"
-                          value="email"
-                          checked={formTwoFactorMethod === "email"}
-                          onChange={() => setFormTwoFactorMethod("email")}
-                          className="size-3.5 text-primary focus:ring-secondary"
-                        />
-                        <Mail className="size-4 shrink-0" />
-                        <div className="min-w-0">
-                          <span className="block text-xs">Código por E-mail</span>
-                          <span className="block text-[10px] text-slate-400 font-normal">
-                            Token numérico temporário
+              ) : (
+                <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50/60 space-y-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-xl bg-primary/10 text-primary mt-0.5 shrink-0">
+                        <ShieldCheck className="size-5" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <label
+                            htmlFor="formTwoFactorEnabled"
+                            className="text-xs font-bold text-slate-800 cursor-pointer"
+                          >
+                            Autenticação em 2 Fatores (2FA)
+                          </label>
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                              formTwoFactorEnabled
+                                ? "text-emerald-700 bg-emerald-100/70 border-emerald-300"
+                                : "text-slate-500 bg-slate-100 border-slate-200"
+                            }`}
+                          >
+                            {formTwoFactorEnabled ? "Ativado" : "Desativado"}
                           </span>
                         </div>
-                      </label>
-
-                      <label
-                        className={`flex items-center gap-2.5 p-2.5 rounded-lg border text-xs cursor-pointer transition ${
-                          formTwoFactorMethod === "authenticator"
-                            ? "border-primary bg-primary/5 text-primary font-bold shadow-xs"
-                            : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 font-medium"
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="form2FAMethod"
-                          value="authenticator"
-                          checked={formTwoFactorMethod === "authenticator"}
-                          onChange={() => setFormTwoFactorMethod("authenticator")}
-                          className="size-3.5 text-primary focus:ring-secondary"
-                        />
-                        <Smartphone className="size-4 shrink-0" />
-                        <div className="min-w-0">
-                          <span className="block text-xs">App Autenticador (TOTP)</span>
-                          <span className="block text-[10px] text-slate-400 font-normal">
-                            Google Authenticator / Authy
-                          </span>
-                        </div>
-                      </label>
+                        <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                          {formTwoFactorEnabled
+                            ? `Proteção ativa via ${
+                                formTwoFactorMethod === "authenticator"
+                                  ? "App Autenticador (TOTP)"
+                                  : "Código por E-mail"
+                              }. Você pode desmarcar para resetar caso o administrador tenha perdido o acesso.`
+                            : "Desativado no momento. O próprio administrador deve ativar em seu perfil após fazer login."}
+                        </p>
+                      </div>
                     </div>
 
-                    {/* PAREAMENTO TOTP (QR CODE + CHAVE + CÓDIGO OTP) */}
-                    {formTwoFactorMethod === "authenticator" && (
-                      <div className="mt-3 space-y-3 bg-white p-3.5 rounded-xl border border-slate-200">
-                        {/* PASSO 1: QR CODE */}
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                              <span className="size-4.5 rounded-full bg-primary text-white text-[10px] font-bold inline-flex items-center justify-center">1</span>
-                              Escaneie o QR Code no app autenticador
-                            </span>
-                            <button
-                              type="button"
-                              onClick={handleGenerateNewModalSecret}
-                              className="text-[11px] text-primary hover:underline font-semibold cursor-pointer"
-                            >
-                              Gerar novo QR
-                            </button>
-                          </div>
-
-                          <div className="flex flex-col sm:flex-row items-center gap-3 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-                            {formTwoFactorQrUrl ? (
-                              <div className="size-24 relative bg-white p-1 rounded-lg border border-slate-200 shrink-0">
-                                <Image src={formTwoFactorQrUrl} alt="QR Code 2FA" fill className="object-contain p-0.5" />
-                              </div>
-                            ) : (
-                              <div className="size-24 flex items-center justify-center bg-white rounded-lg border border-slate-200 text-slate-400 text-xs">
-                                Gerando QR...
-                              </div>
-                            )}
-
-                            <div className="space-y-1.5 text-xs flex-1 min-w-0">
-                              <p className="text-[11px] text-slate-600 leading-relaxed">
-                                Abra o <strong>Google Authenticator</strong> ou <strong>Authy</strong> no celular e escaneie o código.
-                              </p>
-                              <div>
-                                <span className="text-[10px] text-slate-400 block mb-0.5">Ou digite a chave manual:</span>
-                                <div className="flex items-center gap-1.5">
-                                  <code className="bg-white px-2 py-0.5 rounded border border-slate-300 font-mono text-[11px] font-bold text-primary select-all break-all">
-                                    {formTwoFactorSecret}
-                                  </code>
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      navigator.clipboard.writeText(formTwoFactorSecret);
-                                      setCopiedSecret(true);
-                                      toast.info("Chave copiada!");
-                                      setTimeout(() => setCopiedSecret(false), 2000);
-                                    }}
-                                    className="p-1 bg-white border border-slate-200 rounded text-slate-600 hover:bg-slate-100 transition cursor-pointer shrink-0"
-                                    title="Copiar chave"
-                                  >
-                                    {copiedSecret ? <Check className="size-3 text-emerald-600" /> : <Copy className="size-3" />}
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* PASSO 2: DIGITAR O CÓDIGO OTP */}
-                        <div className="space-y-2 pt-2 border-t border-slate-100">
-                          <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                            <span className="size-4.5 rounded-full bg-primary text-white text-[10px] font-bold inline-flex items-center justify-center">2</span>
-                            Digite o código de 6 dígitos gerado pelo app
-                          </span>
-                          <div className="flex flex-col sm:flex-row items-center gap-2">
-                            <input
-                              type="text"
-                              inputMode="numeric"
-                              autoComplete="one-time-code"
-                              maxLength={6}
-                              placeholder="000000"
-                              value={formOtpCode}
-                              onChange={(e) => {
-                                setFormOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6));
-                                setIsTotpVerified(false);
-                              }}
-                              className="w-full sm:w-36 text-center font-mono text-base tracking-[0.25em] font-bold py-1.5 px-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white text-slate-800 placeholder:text-slate-300"
-                            />
-                            <button
-                              type="button"
-                              disabled={formOtpCode.length !== 6 || isVerifyingTotp || isTotpVerified}
-                              onClick={handleVerifyModalOtp}
-                              className={`w-full sm:w-auto px-4 py-2 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition disabled:opacity-50 ${
-                                isTotpVerified
-                                  ? "bg-emerald-600 text-white cursor-default"
-                                  : "bg-primary hover:bg-primary/90 text-white"
-                              }`}
-                            >
-                              {isVerifyingTotp ? (
-                                <>
-                                  <Loader2 className="size-3.5 animate-spin" />
-                                  <span>Validando...</span>
-                                </>
-                              ) : isTotpVerified ? (
-                                <>
-                                  <Check className="size-3.5" />
-                                  <span>Pareamento Confirmado!</span>
-                                </>
-                              ) : (
-                                <>
-                                  <Check className="size-3.5 text-secondary" />
-                                  <span>Confirmar Código</span>
-                                </>
-                              )}
-                            </button>
-                          </div>
-                          {isTotpVerified ? (
-                            <p className="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
-                              <Check className="size-3.5" />
-                              Código validado com sucesso! O usuário já poderá acessar com o autenticador.
-                            </p>
-                          ) : (
-                            <p className="text-[10px] text-slate-500">
-                              Insira os 6 dígitos exibidos no app para validar a sincronização antes de salvar.
-                            </p>
-                          )}
-                        </div>
-
-                        {/* CÓDIGOS DE BACKUP */}
-                        <div className="space-y-1 pt-2 border-t border-slate-100">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[11px] font-bold text-slate-700">Códigos de Recuperação</span>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                navigator.clipboard.writeText(formBackupCodes.join("\n"));
-                                setCopiedBackups(true);
-                                toast.info("Códigos copiados!");
-                                setTimeout(() => setCopiedBackups(false), 2000);
-                              }}
-                              className="text-[10px] text-primary hover:underline font-bold flex items-center gap-1 cursor-pointer"
-                            >
-                              <Copy className="size-3" />
-                              <span>{copiedBackups ? "Copiados!" : "Copiar códigos"}</span>
-                            </button>
-                          </div>
-                          <div className="grid grid-cols-3 gap-1 bg-slate-50 p-2 rounded-lg border border-slate-200 font-mono text-center text-[10px] font-bold text-slate-700">
-                            {formBackupCodes.slice(0, 3).map((c, i) => (
-                              <span key={i} className="bg-white py-0.5 rounded border border-slate-100">{c}</span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                    <label className="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+                      <input
+                        type="checkbox"
+                        id="formTwoFactorEnabled"
+                        checked={formTwoFactorEnabled}
+                        onChange={(e) => setFormTwoFactorEnabled(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary cursor-pointer"></div>
+                    </label>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
 
               {/* STATUS (SE NÃO FOR ELE MESMO) */}
               {editingAdmin && isSelf(editingAdmin) ? (

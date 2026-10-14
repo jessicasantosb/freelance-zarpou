@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { DestinationItem, DEFAULT_DESTINATIONS } from "@/data/home/destinations";
+import { DestinationItem } from "@/data/home/destinations";
 import { api } from "@/lib/api";
 
 function serializeDestinationPayload(d: DestinationItem) {
@@ -72,12 +72,12 @@ interface DestinationStore {
 }
 
 export const useDestinationStore = create<DestinationStore>()((set, get) => ({
-  destinations: DEFAULT_DESTINATIONS,
+  destinations: [],
 
   fetchDestinations: async () => {
     try {
       const list = await api.get<DestinationApiResponse[]>("/destinations");
-      if (Array.isArray(list) && list.length > 0) {
+      if (Array.isArray(list)) {
         const mapped: DestinationItem[] = list.map((d) => ({
           id: d.id,
           title: d.title,
@@ -95,9 +95,12 @@ export const useDestinationStore = create<DestinationStore>()((set, get) => ({
           highlights: Array.isArray(d.highlights) ? d.highlights : undefined,
         }));
         set({ destinations: mapped });
+      } else {
+        set({ destinations: [] });
       }
     } catch (err) {
-      console.warn("Falha ao buscar destinos da API, mantendo dados locais:", err);
+      console.warn("Falha ao buscar destinos da API:", err);
+      set({ destinations: [] });
     }
   },
 
